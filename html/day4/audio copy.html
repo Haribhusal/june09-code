@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+    <audio controls id="myAudio" style="display: none;">
+        <source src="./sample.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <button id="playBtn">Play</button>
+    <button id="pauseBtn">Pause</button>
+
+
+    <script>
+
+
+        let myaudioselection = document.getElementById('myAudio');
+        let myplaybtn = document.getElementById('playBtn');
+        let mypausebtn = document.getElementById('pauseBtn')
+
+        myplaybtn.addEventListener('click', function () {
+            myaudioselection.play();
+        })
+
+        mypausebtn.addEventListener('click', function () {
+            myaudioselection.pause();
+        })
+
+    </script>
+
+</body>
+
+</html>

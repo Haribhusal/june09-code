@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+
+<body>
+
+
+    <form>
+        <input name="fname" type="text" placeholder="Enter full name" required />
+        <hr />
+        <input name="pwd" type="password" placeholder="Enter password" />
+        <hr />
+        <input name="email" placeholder="Enter your email" value="bhusalhari89@gmail.com" readonly>
+        <hr />
+        <textarea name="message" placeholder="Enter message" rows="10"></textarea>
+        <hr />
+        <input name="genderSelection" type="radio" id="mselec"> <label for="mselec">Male</label>
+        <input name="genderSelection" type="radio" id="fselect"> <label for="fselect">Female</label>
+        <input name="genderSelection" type="radio" id="notspecify"> <label for="notspecify">Not Specify</label>
+        <hr />
+
+        <input name="gameSelection" type="checkbox" id="cric"> <label for="cric">I want to play Cricket</label>
+        <input name="gameSelection" type="checkbox" id="foot"> <label for="foot">I want to play Football</label>
+        <input name="gameSelection" type="checkbox" id="bb"> <label for="bb">I want to play Basketball</label>
+        <input name="gameSelection" type="checkbox" id="tt"> <label for="tt">I want to play Table Tenis</label>
+
+        <hr />
+
+
+        <input type="datetime-local">
+        <hr />
+
+        <input type="file" accept="image/png">
+        <hr />
+        <select>
+            <option value="1">Nepal</option>
+            <option value="1">India</option>
+            <option value="1">Bangaladesh</option>
+            <option value="1">China</option>
+            <option value="1">Bhutan</option>
+        </select>
+        <hr />
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+</html>

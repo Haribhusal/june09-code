@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <canvas id="myCanvas" height="100" width="200" style="border:1px solid red;">
+    </canvas>
+
+</body>
+
+<script>
+
+    // Generate a line
+    let canvas = document.getElementById('myCanvas')
+    let ctx = canvas.getContext('2d');
+    // ctx.moveTo(0, 0)
+    // ctx.lineTo(100, 50);
+    // ctx.stroke();
+
+
+    // degree = radians * 180/Math.PI;
+    // radians = degree * Math.PI/ 180
+
+    // 90*PI/180
+
+    // degrees = radians * (180 / Math.PI);
+
+
+
+    // Generate a circle
+
+    // var c = document.getElementById("myCanvas");
+    // var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(95, 50, 30, 3.14, 2 * Math.PI, true);
+    // ctx.arc(x, y, radius, startAngle, endAngle [, counterclockwise]);
+
+    ctx.stroke();
+
+</script>
+
+
+</html>

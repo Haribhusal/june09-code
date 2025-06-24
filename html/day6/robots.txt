@@ -1,0 +1,3 @@
+User-agent: * Disallow: /admin/ Disallow: /login/ Disallow: /register/ Disallow: /cart/ Disallow: /checkout/ Disallow: /user/ Disallow: /?sort= Disallow: /?filter= Allow: /shop/ Allow: /products/ Allow: /about-us/ Allow: /services/ Allow: /our-works/ Allow: /contact/ Allow: /offers/
+
+Sitemap: https://www.abcmarketplace.com/sitemap.xml
