@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .box {
+            position: relative;
+        }
+
+        img {
+            position: absolute;
+            border-radius: 100%;
+            border: 5px solid white;
+        }
+
+        img:nth-child(1) {
+            left: 50px;
+            z-index: 1;
+        }
+
+        img:nth-child(2) {
+            left: 100px;
+            z-index: 99;
+
+        }
+
+        img:nth-child(3) {
+            left: 150px;
+            z-index: 98;
+
+        }
+
+        img:nth-child(4) {
+            left: 200px;
+            z-index: 999;
+
+        }
+
+        img:nth-child(5) {
+            left: 250px;
+            z-index: 99;
+
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <div class="box">
+        <img class="img1" src="https://picsum.photos/id/12/100/100" alt="">
+        <img class="img2" src="https://picsum.photos/id/13/100/100" alt="">
+        <img class="img3" src="https://picsum.photos/id/14/100/100" alt="">
+        <img class="img4" src="https://picsum.photos/id/15/100/100" alt="">
+        <img class="img5" src="https://picsum.photos/id/16/100/100" alt="">
+    </div>
+
+</body>
+
+</html>
