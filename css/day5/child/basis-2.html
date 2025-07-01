@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex-Basis Example</title>
+    <style>
+        .container {
+            display: flex;
+            gap: 10px;
+            background-color: #eee;
+            padding: 20px;
+        }
+
+        .item {
+            background-color: #4caf50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .item1 {
+            flex-basis: 100px;
+        }
+
+        .item2 {
+            flex-basis: 200px;
+        }
+
+        .item3 {
+            flex-basis: 300px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Flex-Basis Example</h2>
+    <div class="container">
+        <div class="item item1">100px</div>
+        <div class="item item2">200px</div>
+        <div class="item item3">300px</div>
+    </div>
+
+</body>
+
+</html>

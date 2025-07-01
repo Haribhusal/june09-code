@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: red !important;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            background-color: bisque;
+            padding: 10px;
+            display: none;
+            /* display: inline-block; */
+        }
+
+        .dropdown-menu a {
+            display: block;
+            color: #333;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+
+            <div class="dropdown">
+                <a href="javascript:void(0)">
+                    <button>About ></button>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="#">Introduction</a>
+                    <a href="#">Our Team</a>
+                    <a href="#">Message from Principal</a>
+                    <a href="#">Contact Us</a>
+                </div>
+            </div>
+
+        </nav>
+    </header>
+
+</body>
+
+</html>
