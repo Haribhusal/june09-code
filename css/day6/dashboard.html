@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: yellow;
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            grid-template-rows: repeat(10, 1fr);
+        }
+
+        header {
+            grid-row-start: 1;
+            grid-row-end: 3;
+            grid-column-start: 1;
+            background-color: red;
+            grid-column-end: 11;
+        }
+
+        aside {
+            grid-row-start: 3;
+            grid-row-end: 11;
+            grid-column-start: 1;
+            grid-column-end: 4;
+            background-color: black;
+        }
+
+        main {
+            grid-row-start: 3;
+            grid-row-end: 10;
+            grid-column-start: 4;
+            grid-column-end: 11;
+            background-color: white;
+        }
+
+        footer {
+            grid-row: 10/11;
+            grid-column: 4/11;
+            background-color: blue;
+        }
+
+        .modal {
+            grid-row-start: 4;
+            grid-row-end: 9;
+            grid-column-start: 3;
+            grid-column-end: 10;
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        This is Header
+    </header>
+    <aside>This is sidebar</aside>
+    <main>This is
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis alias quidem nam obcaecati cupiditate
+        provident magnam sed, ut quo quaerat voluptatem, eum accusantium molestias a non quasi nulla, esse tempore.Lorem
+        ipsum, dolor sit amet consectetur adipisicing elit. Debitis alias quidem nam obcaecati cupiditate provident
+        magnam
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis alias quidem nam obcaecati cupiditate
+        provident magnam sed, ut quo quaerat voluptatem, eum accusantium molestias a non quasi nulla, esse
+        tempore.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis alias quidem nam obcaecati cupiditate
+        provident magnam sed, ut quo quaerat voluptatem, eum accusantium molestias a non quasi nulla, esse
+        tempore.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis alias quidem nam obcaecati cupiditate
+        provident magnam sed, ut quo quaerat voluptatem, eum accusantium molestias a non quasi nulla, esse
+        tempore.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis alias quidem nam obcaecati cupiditate
+        provident magnam sed, ut quo quaerat voluptatem, eum accusantium molestias a non quasi nulla, esse
+        tempore.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis alias quidem nam obcaecati cupiditate
+        provident magnam sed, ut quo quaerat voluptatem, eum accusantium molestias a non quasi nulla, esse
+        tempore.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis alias quidem nam obcaecati cupiditate
+        provident magnam sed, ut quo quaerat voluptatem, eum accusantium molestias a non quasi nulla, esse
+        tempore.
+        sed, ut quo quaerat voluptatem, eum accusantium molestias a non quasi nulla, esse tempore.
+    </main>
+    <footer>This is footer</footer>
+
+    <!-- <div class="modal">
+        This is modal
+    </div> -->
+
+</body>
+
+</html>

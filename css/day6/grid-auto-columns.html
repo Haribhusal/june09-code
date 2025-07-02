@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>grid-auto-columns Example</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-rows: repeat(2, 100px);
+            /* 2 rows */
+            grid-auto-flow: column;
+            /* auto-fill in columns instead of rows */
+            grid-auto-columns: 300px;
+            /* default width for new columns */
+            gap: 10px;
+            background: lightblue;
+            /* grid: repeat(5, 1fr) repeat(3,1fr) */
+        }
+
+        .box {
+            background: teal;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+        <div class="box">5</div>
+    </div>
+
+</body>
+
+</html>
