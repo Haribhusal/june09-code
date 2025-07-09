@@ -1,0 +1,35 @@
+header {
+    background-color: orange;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    nav {
+        display: flex;
+        gap: 10px;
+
+        a {
+            color: white;
+            text-decoration: underline;
+
+            &:last-child {
+                background-color: aqua;
+            }
+        }
+
+
+    }
+
+    .actions {
+        display: flex;
+        gap: 10px;
+
+        button {
+            padding: 10px 20px;
+
+            &:hover {
+                background-color: black
+            }
+        }
+    }
+}

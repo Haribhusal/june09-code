@@ -1,0 +1,23 @@
+// :root {
+//     --primaryColor: purple
+// }
+
+@import './variable';
+@import './reset';
+@import './header';
+@import './footer';
+@import './about';
+
+
+
+section {
+    p {
+        color: #333;
+
+        &::first-letter {
+            color: red;
+            font-size: 32px;
+            background-color: yellow;
+        }
+    }
+}

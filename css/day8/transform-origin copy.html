@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>CSS <code>transform-origin</code> with <code>rotate</code> Example</h2>
+    <p>Click the buttons to change the rotation origin:</p>
+    <div style="margin-bottom: 1em;">
+        <button onclick="setOrigin('center center')">Center</button>
+        <button onclick="setOrigin('left top')">Top Left</button>
+        <button onclick="setOrigin('right bottom')">Bottom Right</button>
+        <button onclick="setOrigin('50% 100%')">Bottom Center</button>
+    </div>
+    <div id="box" style="
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, #4e54c8, #8f94fb);
+        margin: 40px auto;
+        border-radius: 12px;
+        transition: transform 0.6s cubic-bezier(.68,-0.55,.27,1.55), transform-origin 0.4s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2em;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+        transform: rotate(0deg);
+        transform-origin: center center;
+    ">
+        Rotate Me!
+    </div>
+    <div style="text-align: center;">
+        <button onclick="rotateBox()">Rotate 45°</button>
+        <button onclick="resetBox()">Reset</button>
+    </div>
+    <script>
+        let angle = 0;
+        function setOrigin(origin) {
+            const box = document.getElementById('box');
+            box.style.transformOrigin = origin;
+        }
+        function rotateBox() {
+            angle += 45;
+            document.getElementById('box').style.transform = `rotate(${angle}deg)`;
+        }
+        function resetBox() {
+            angle = 0;
+            document.getElementById('box').style.transform = 'rotate(0deg)';
+        }
+    </script>
+</body>
+
+</html>

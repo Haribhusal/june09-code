@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            height: 100px;
+            width: 100px;
+            background-color: yellow;
+            transition: all 0.5s ease;
+        }
+
+        .box:hover {
+            /* transform: translate(100px, 200px); */
+            /* transform: translateX(100px); */
+            /* transform: translateY(50px) */
+            /* transform: rotateZ(-90deg); */
+            /* transform: skewZ(30deg); */
+            /* transform: scaleX(-1); */
+            /* transform: scaleY(2); */
+            /* transform: rotate(45deg) scale(1.5); */
+            /* scale: 3;
+            rotate: 90deg; */
+            /* matrix(scaleX(), skewY(), skewX(), scaleY(), translateX(), translateY()). */
+            transform: matrix(2, 0, 1.4, 1, 50, 50);
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box">Namaste</div>
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam alias nesciunt beatae, architecto expedita
+        veniam illo. Vitae ad explicabo aut delectus, blanditiis ipsa dolorum cupiditate qui expedita rem libero
+        aliquam?
+    </p>
+</body>
+
+</html>

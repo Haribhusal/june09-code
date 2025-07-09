@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .wrapper:hover .box {
+            animation-play-state: running;
+        }
+
+        .box {
+            height: 100px;
+            width: 100px;
+            border: 2px solid red;
+            animation-name: moveRightAndBeBack;
+            background-color: yellow;
+            /* animation-duration: 5s;
+            animation-timing-function: ease;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            animation-direction: alternate;
+            animation-play-state: paused; */
+            animation: name duration timing-function delay iteration-count direction fill-mode;
+        }
+
+        @keyframes moveRightAndBeBack {
+            /* from {
+                transform: translateX(0);
+            }
+
+            to {
+                border-radius: 50%;
+                background-color: greenyellow;
+                transform: translateX(100px) rotate(90deg);
+            } */
+
+            25% {
+                transform: translateX(100px) rotate(90deg);
+                background-color: red;
+                border-radius: 50%;
+            }
+
+            50% {
+                background-color: greenyellow;
+                border-radius: 0;
+                transform: translate(100px, 100px) rotate(90deg);
+            }
+
+            75% {
+                transform: translateY(100px) rotate(-90deg);
+                border-radius: 50%;
+                background-color: purple;
+            }
+
+            100% {
+                transform: translate(0, 0);
+                background-color: aqua;
+
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <div class="box"></div>
+    </div>
+</body>
+
+</html>

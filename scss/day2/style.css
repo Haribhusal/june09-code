@@ -1,0 +1,66 @@
+button {
+  padding: 10px 15px;
+  border-radius: 10px;
+  background-color: #0097a7;
+  border-width: 2px;
+  border-style: solid;
+  border-color: orange;
+}
+
+header button {
+  padding: 3px 10px;
+  border-radius: 10px;
+  background-color: transparent;
+  border-width: 2px;
+  border-style: solid;
+  border-color: orange;
+}
+
+footer {
+  background-color: darkblue;
+  padding: 40px;
+}
+
+footer button {
+  padding: 5px 15px;
+  border-radius: 10px;
+  background-color: white;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+}
+
+/* This CSS will print because %message-shared is extended. */
+.message, .success, .error, .warning {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #333;
+}
+
+.success {
+  border-color: green;
+}
+
+.error {
+  border-color: red;
+}
+
+.warning {
+  border-color: yellow;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+article[role="main"] {
+  width: 62.5%;
+}
+
+aside[role="complementary"] {
+  width: 31.25%;
+  margin-left: auto;
+}
+/*# sourceMappingURL=style.css.map */

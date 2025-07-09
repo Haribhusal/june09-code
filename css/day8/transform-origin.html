@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>CSS <code>transform-origin</code> with <code>rotate</code> Example (Pure CSS)</h2>
+    <p>Each box below uses a different <code>transform-origin</code> and is rotated 45°:</p>
+    <div class="container">
+        <div class="box origin-center">
+            <span>center center</span>
+        </div>
+        <div class="box origin-topleft">
+            <span>left top</span>
+        </div>
+        <div class="box origin-bottomright">
+            <span>right bottom</span>
+        </div>
+        <div class="box origin-bottomcenter">
+            <span>50% 100%</span>
+        </div>
+    </div>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+            margin-top: 2em;
+        }
+
+        .box {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+            color: white;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5em;
+            position: relative;
+            transition: box-shadow 0.3s;
+            /* animation: rotateBox 2.5s linear infinite; */
+        }
+
+        .box span {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.95em;
+            color: #fff;
+            opacity: 0.85;
+        }
+
+        .origin-center {
+            transform: rotate(45deg);
+            transform-origin: center center;
+        }
+
+        .origin-topleft {
+            transform: rotate(45deg);
+            transform-origin: left top;
+        }
+
+        .origin-bottomright {
+            transform: rotate(45deg);
+            transform-origin: right bottom;
+        }
+
+        .origin-bottomcenter {
+            transform: rotate(45deg);
+            transform-origin: 50% 100%;
+        }
+
+        @keyframes rotateBox {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</body>
+
+</html>

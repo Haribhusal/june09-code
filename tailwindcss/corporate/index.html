@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coroporate Website</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+
+    <header class="shadow py-5 md:px-5">
+
+        <div class="max-w-7xl mx-auto flex gap-3 items-center justify-between flex-col md:flex-row">
+            <div class="logo">
+                <img src="./images/logo.png" alt="" class="w-24">
+            </div>
+            <nav class="space-x-3">
+                <a href="#">About us</a>
+                <a href="#">Editorial Team</a>
+                <a href="#">Contact Us</a>
+            </nav>
+            <div class="flex gap-3">
+                <button class="px-5 py-2 border-2 rounded-full hover:text-red-500 cursor-pointer">Login</button>
+                <button
+                    class="px-5 py-2 border-2 border-red-500 rounded-full bg-red-600 text-white hover:bg-transparent hover:text-red-500 cursor-pointer ">Get
+                    Started</button>
+            </div>
+        </div>
+    </header>
+
+
+    <main>
+        <section class="bg-red-50 pb-10">
+            <div class="max-w-7xl mx-auto text-center md:text-left flex items-center flex-col md:flex-row">
+                <div class="textpart p-5">
+                    <h1 class="text-5xl md:text-6xl font-semibold ">Elevate your busiess lorem ipsum solutions</h1>
+                    <p class="text-gray-500 my-5">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod dicta rem, enim reiciendis
+                        consequuntur voluptates.
+                    </p>
+                    <button
+                        class="bg-red-500 mx-auto md:m-0 hover:bg-red-700 text-white cursor-pointer flex px-2 py-2 items-center rounded-full">
+                        <span class="px-3">
+                            Get In Touch
+                        </span>
+                        <span class="h-10 w-10 bg-white rounded-full flex items-center justify-center">
+                            <i class="fa-solid  fa-arrow-right text-gray-600"></i>
+                        </span>
+                    </button>
+                </div>
+                <div class="imagepart p-5">
+                    <div class="relative">
+                        <img src="https://picsum.photos/id/15/800/800" class="rounded-md" alt="">
+                        <div class="cards w-full mt-3 flex flex-col absolute sm:flex-row gap-3">
+
+                            <article class="bg-green-600 text-white p-5 rounded-md">
+                                <h3 class="text-5xl font-bold mb-5">100M +</h3>
+                                <p class="opacity-80">
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                </p>
+                            </article>
+                            <article class="bg-orange-600 p-5 rounded-md text-white">
+                                <h3 class="text-5xl font-bold mb-5">100M +</h3>
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                </p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="max-w-7xl flex py-10 pt-[150px] mx-auto">
+                <div class="w-full sm:w-1/3 bg-[#0097a7]">Div 1</div>
+                <div class="w-full sm:w-1/3 bg-green-500">Div 2</div>
+                <div class="w-full sm:w-1/3 bg-blue-500">Div 3</div>
+
+            </div>
+        </section>
+    </main>
+
+
+
+
+</body>
+
+</html>

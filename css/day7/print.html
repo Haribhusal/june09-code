@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        header {
+            height: 130px;
+        }
+
+        footer {
+            height: 200px;
+        }
+
+        @media print {
+            header {
+                display: none;
+            }
+
+            footer {
+                display: none;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>This is header</header>
+    <main>
+        <div class="printArea">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto veniam, at temporibus reiciendis,
+            numquam fugiat, laudantium atque facere eius asperiores voluptates! Voluptatibus, tenetur beatae. Ullam
+            fugiat quidem aperiam earum sequi.
+        </div>
+    </main>
+    <footer>this is footer</footer>
+</body>
+
+</html>

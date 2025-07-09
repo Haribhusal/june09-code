@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>animation-fill-mode: both</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background: red;
+            animation: grow 2s ease 1s;
+            animation-fill-mode: both;
+        }
+
+        @keyframes grow {
+            0% {
+                background: blue;
+                transform: scale(0.5);
+            }
+
+            100% {
+                background: green;
+                border-radius: 50%;
+
+                transform: scale(1.5);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Translate3D with Perspective</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 500px;
+            /* <-- Perspective added here */
+        }
+
+        .scene {
+            width: 200px;
+            height: 200px;
+            transform-style: preserve-3d;
+            /* <-- Needed for 3D effect */
+            animation: rotate 5s infinite linear;
+        }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            background: #00f;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: sans-serif;
+            transform: translate3d(0, 0, 100px);
+            /* <-- Push forward in z-axis */
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotateY(0deg);
+            }
+
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scene">
+        <div class="box">3D Box</div>
+    </div>
+</body>
+
+</html>

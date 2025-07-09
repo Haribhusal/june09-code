@@ -1,0 +1,120 @@
+@import './include-media';
+$brandColor: #0097a7;
+
+@mixin buttonStyles($bgcolor, $px, $py, $bordercolor: orange) {
+    padding: $px $py;
+    border-radius: 10px;
+    background-color: $bgcolor;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $bordercolor;
+}
+
+
+@include media('>=tablet') {
+    header {
+        background-color: red;
+    }
+}
+
+button {
+    @include buttonStyles($brandColor, 10px, 15px)
+}
+
+header button {
+    @include buttonStyles(transparent, 3px, 10px);
+}
+
+
+footer {
+    background-color: darkblue;
+    padding: 40px;
+}
+
+footer button {
+
+    @include buttonStyles(white, 5px, 15px, transparent)
+}
+
+// Inheritance
+
+
+/* This CSS will print because %message-shared is extended. */
+%message-shared {
+    border: 1px solid #ccc;
+    padding: 10px;
+    color: #333;
+}
+
+// This CSS won't print because %equal-heights is never extended.
+%equal-heights {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.message {
+    @extend %message-shared;
+}
+
+.success {
+    @extend %message-shared;
+    border-color: green;
+}
+
+.error {
+    @extend %message-shared;
+    border-color: red;
+}
+
+.warning {
+    @extend %message-shared;
+    border-color: yellow;
+}
+
+// operators
+
+
+// .container {
+//     display: flex;
+// }
+
+// article[role="main"] {
+//     width: #{math.div(600px, 960px) * 100%};
+// }
+
+// aside[role="complementary"] {
+//     width: #{math.div(300px, 960px) * 100%};
+//     margin-left: auto;
+// }
+
+// @use "sass:math";
+
+// // $main-width: math.div(600px, 960px) * 100%;
+// // $aside-width: math.div(300px, 960px) * 100%;
+
+// .container {
+//     display: flex;
+// }
+
+// article[role="main"] {
+//     width: $main-width;
+// }
+
+// aside[role="complementary"] {
+//     width: $aside-width;
+//     margin-left: auto;
+// }
+
+
+.container {
+    display: flex;
+}
+
+article[role="main"] {
+    width: (600px / 960px) * 100%;
+}
+
+aside[role="complementary"] {
+    width: (300px / 960px) * 100%;
+    margin-left: auto;
+}

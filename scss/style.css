@@ -1,0 +1,85 @@
+@use './variable'
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: blue;
+  border: 2px solid yellowgreen;
+  color: white;
+  padding: 10px 25px;
+}
+
+h1,
+h2,
+h3 {
+  color: blue;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+header {
+  background-color: orange;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+header nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+}
+
+header nav a {
+  color: white;
+  text-decoration: underline;
+}
+
+header nav a:last-child {
+  background-color: aqua;
+}
+
+header .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+}
+
+header .actions button {
+  padding: 10px 20px;
+}
+
+header .actions button:hover {
+  background-color: black;
+}
+
+footer {
+  background-color: #a1a1a1;
+  color: white;
+  padding: 30px 0;
+}
+
+section p {
+  color: #333;
+}
+
+section p::first-letter {
+  color: red;
+  font-size: 32px;
+  background-color: yellow;
+}
+
+/*# sourceMappingURL=style.css.map */
