@@ -1,0 +1,15 @@
+Features to include:
+
+Sidebar navigation (collapsible)
+
+Top navbar
+
+Cards with stats
+
+Tables with filters/sorting
+
+Modals and dropdowns
+
+Responsive layout
+
+Theme toggle (dark/light using Tailwind’s dark mode)

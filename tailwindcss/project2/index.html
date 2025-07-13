@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        .active {
+            width: 88px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .active .label {
+            display: none;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            max-width: 500px;
+            z-index: 99;
+            background-color: white;
+            width: 100%;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .showPopUp {
+            display: block !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper flex min-h-screen">
+        <aside class="w-72 p-5 bg-gray-900 flex flex-col justify-between text-white" id="sidebar">
+            <div class="upper">
+                <div class="user flex items-center gap-3">
+                    <img src="https://picsum.photos/id/41/60/60" class="rounded-full" alt="">
+                    <div class="user-info label">
+                        <h3 class="font-bold">Ramesh Uprety</h3>
+                        <p class="text-slate-500">Admin</p>
+                    </div>
+                </div>
+                <nav class="my-5 flex flex-col gap-3">
+                    <a href="#">
+                        <div class="link flex items-center gap-3 group hover:bg-gray-700 rounded-full">
+                            <span class="h-12 w-12  rounded-full flex justify-center items-center bg-gray-700">
+                                <i class="fa-solid fa-gauge"></i>
+                            </span>
+                            <span class="label">Dashboard</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="link flex items-center gap-3 group hover:bg-gray-700 rounded-full">
+                            <span class="h-12 w-12  rounded-full flex justify-center items-center bg-gray-700">
+                                <i class="fa-solid fa-gauge"></i>
+                            </span>
+                            <span class="label">Dashboard</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="link flex items-center gap-3 group hover:bg-gray-700 rounded-full">
+                            <span class="h-12 w-12  rounded-full flex justify-center items-center bg-gray-700">
+                                <i class="fa-solid fa-gauge"></i>
+                            </span>
+                            <span class="label">Dashboard</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="link flex items-center gap-3 group hover:bg-gray-700 rounded-full">
+                            <span class="h-12 w-12  rounded-full flex justify-center items-center bg-gray-700">
+                                <i class="fa-solid fa-gauge"></i>
+                            </span>
+                            <span class="label">Dashboard</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="link flex items-center gap-3 group hover:bg-gray-700 rounded-full">
+                            <span class="h-12 w-12  rounded-full flex justify-center items-center bg-gray-700">
+                                <i class="fa-solid fa-gauge"></i>
+                            </span>
+                            <span class="label">Dashboard</span>
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div class="link flex items-center gap-3 group hover:bg-gray-700 rounded-full">
+                            <span class="h-12 w-12  rounded-full flex justify-center items-center bg-gray-700">
+                                <i class="fa-solid fa-gauge"></i>
+                            </span>
+                            <span class="label">Dashboard</span>
+                        </div>
+                    </a>
+                </nav>
+
+            </div>
+
+
+            <div class="bottom flex flex-col gap-3">
+                <a href="#">
+                    <div class="link flex items-center gap-3 group hover:bg-gray-700 rounded-full">
+                        <span class="h-12 w-12  rounded-full flex justify-center items-center bg-gray-700">
+                            <i class="fa-solid fa-gauge"></i>
+                        </span>
+                        <span class="label">Logout</span>
+                    </div>
+                </a>
+                <div class="link flex items-center gap-3 group hover:bg-gray-700 rounded-full" id="toggleSidebar">
+                    <span class="h-12 w-12  rounded-full flex justify-center items-center bg-gray-700">
+                        <i class="fa-solid fa-gauge"></i>
+                    </span>
+                    <span class="label">Toggle</span>
+                </div>
+            </div>
+        </aside>
+        <main class="flex-1">
+            <header class="px-5 py-3 bg-gray-100 flex justify-between items-center">
+                <div class="left">
+                    <h3 class="text-xl font-bold">My Dashboard</h3>
+                </div>
+                <div class="right flex gap-3 items-center">
+                    <button class="h-12 w-12 rounded-full bg-black text-white flex justify-center items-center">
+                        <i class="fa-solid fa-bell"></i>
+                    </button>
+                    <button id="openPopupButton" class="bg-green-600 text-white px-5 py-3 rounded-md">Login</button>
+                </div>
+            </header>
+            <div class="dashboard-components">
+                <div class="p-5">
+                    <div id="chartContainer"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="popup hidden" id="popup">
+        <div class="popup-content">
+            <h3 class="text-3xl font-semibold">Hello</h3>
+            <p class="p-5 bg-gray-100 my-5 rounded-md">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores nisi amet minus maxime incidunt quia
+                odio delectus harum! Eum sit recusandae perspiciatis voluptatum saepe aliquid ratione amet suscipit
+                soluta error!
+            </p>
+
+            <div class="actions mt-5 flex justify-between gap-3">
+                <button class="bg-gray-200 px-5 py-3 rounded-md" id="closePupupButton">Close</button>
+                <button class="bg-green-600 text-white px-5 py-3 rounded-md">Proceed</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        let popup = document.getElementById('popup');
+        let opb = document.getElementById('openPopupButton');
+        let cpb = document.getElementById('closePupupButton');
+        opb.addEventListener('click', function () {
+            popup.classList.toggle('showPopUp')
+        })
+        cpb.addEventListener('click', function () {
+            popup.classList.toggle('showPopUp')
+        })
+        let toggleButton = document.getElementById('toggleSidebar')
+        let sidebarElement = document.getElementById('sidebar');
+        toggleButton.onclick = function () {
+            sidebarElement.classList.toggle('active')
+            // sidebarElement.style.width = "100px"
+
+        }
+        sidebarElement.addEventListener('mouseenter', function () {
+
+            let contains = sidebarElement.classList.contains('active')
+            if (contains) {
+                sidebarElement.classList.toggle('active')
+            }
+        })
+
+    </script>
+
+
+
+    <script>
+        window.onload = function () {
+            var dataPoints = [];
+            var options = {
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "Visitors"
+                },
+                axisX: {
+                    valueFormatString: "DD MMM YYYY",
+                },
+                axisY: {
+                    title: "USD",
+                    titleFontSize: 24
+                },
+                data: [{
+                    type: "spline",
+                    yValueFormatString: "$#,###.##",
+                    dataPoints: dataPoints
+                }]
+            };
+
+            function addData(data) {
+                for (var i = 0; i < data.length; i++) {
+                    dataPoints.push({
+                        x: new Date(data[i].date),
+                        y: data[i].units
+                    });
+                }
+                $("#chartContainer").CanvasJSChart(options);
+
+            }
+            $.getJSON("https://canvasjs.com/data/gallery/jquery/daily-sales-data.json", addData);
+
+        }
+    </script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+
+
+</body>
+
+</html>
