@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .qa p {
+            display: none;
+        }
+
+        .qa.open p {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="qa">
+        <h3>Question 1 Lorem ipsum dolor sit amet, consectetur adipisicing.</h3>
+        <p>
+            Answer 1 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis accusantium repellat dolorem
+            laboriosam architecto ut qui, provident commodi adipisci possimus!
+        </p>
+    </div>
+    <div class="qa">
+        <h3>Question 2 Lorem ipsum dolor sit amet, consectetur adipisicing.</h3>
+        <p>
+            Answer 2 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis accusantium repellat dolorem
+            laboriosam architecto ut qui, provident commodi adipisci possimus!
+        </p>
+    </div>
+    <div class="qa">
+        <h3>Question 3 Lorem ipsum dolor sit amet, consectetur adipisicing.</h3>
+        <p>
+            Answer 3 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis accusantium repellat dolorem
+            laboriosam architecto ut qui, provident commodi adipisci possimus!
+        </p>
+    </div>
+    <div class="qa">
+        <h3>Question 4 Lorem ipsum dolor sit amet, consectetur adipisicing.</h3>
+        <p>
+            Answer 4 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis accusantium repellat dolorem
+            laboriosam architecto ut qui, provident commodi adipisci possimus!
+        </p>
+    </div>
+
+    <script>
+        let items = document.querySelectorAll('.qa');
+        items.forEach((item) => {
+            item.addEventListener('click', function () {
+                // Close all answers
+                // Open the clicked one
+                if (item.classList.contains('open')) {
+                    item.classList.remove('open');
+                } else {
+                    item.classList.add('open');
+
+                }
+
+            });
+        });
+    </script>
+
+</body>
+
+</html>

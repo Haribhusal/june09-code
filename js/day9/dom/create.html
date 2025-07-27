@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div>Test</div>
+
+    <button>CLick me</button>
+
+    <script>
+        let header = document.createElement('header')
+        header.innerHTML = `<h1>Hello, I am created from js</h1>`
+        document.querySelector('body').appendChild(header);
+        document.write("hello")
+
+
+
+        let btn = document.querySelector('button')
+        btn.onclick = function () {
+            alert('Hello, button is clicked')
+        }
+
+        btn.addEventListener('mouseenter', function () {
+            alert(document.URL)
+
+        })
+        // document.getElementById(id).onclick = function () { code }	
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1 id="heading">Namaste</h1>
+    <!-- <h1 id="headin1">Namaste</h1> -->
+
+    <!-- <button onclick="changeDesign()">Change Design</button> -->
+    <button id="mybtn">Change Design</button>
+    <br />
+    <hr />
+
+
+    <input id="inputPwd" type="password" placeholder="Enter Password">
+    <button onclick="handleShow()">Show Password</button>
+
+    <hr />
+
+    <script>
+
+        console.log('Hello from js, I am running with Node')
+
+        // console.dir(document)
+        let btn = document.getElementById('mybtn')
+        let title = document.getElementById('heading');
+        console.log(title)
+        title.innerText = "Hello from javascript"
+
+        function changeDesign() {
+            title.style.backgroundColor = "red"
+        }
+
+        btn.addEventListener('mouseenter', function () {
+            changeDesign();
+        })
+
+        function handleShow() {
+            let inputElement = document.getElementById('inputPwd')
+            console.dir(inputElement)
+            inputElement.type = "text"
+
+        }
+
+    </script>
+</body>
+
+</html>

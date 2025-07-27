@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 350px;
+            width: 100%;
+            padding: 30px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .myForm {
+            margin: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 3px 7px;
+            border-radius: 3px;
+        }
+
+        input {
+            padding: 3px 7px;
+            border: 1px solid #e8e8e8;
+            border-radius: 3px;
+
+        }
+
+        input:focus {
+            outline: none;
+            border: 1px solid red;
+        }
+
+        .myForm input {
+            flex: 1;
+        }
+
+        .task_list li {
+            display: flex;
+            margin: 10px 0;
+            justify-content: space-between;
+        }
+
+        .task_list p {
+            flex: 1;
+        }
+
+        .task_list span button:nth-child(2) {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="heading">
+            <h3>Task Management Application</h3>
+            <button onclick="handleClear()">Clear</button>
+        </div>
+        <form action="" class="myForm" onsubmit="handleSubmit(event)">
+            <input id="inputField" type="text" placeholder="Enter Task">
+            <button type="submit">Add Task</button>
+        </form>
+        <ul class="task_list" id="taskList">
+        </ul>
+    </div>
+
+
+    <script>
+
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            let inputField = document.getElementById('inputField');
+            let inputValue = inputField.value.trim();
+            if (!inputValue) { return; }
+            console.log(inputValue);
+            tasks.push(inputValue)
+            localStorage.setItem('tasks', JSON.stringify(tasks))
+            // Add your task handling logic here
+            renderTasks();
+            // Clear the input field after adding task
+            inputField.value = '';
+        }
+
+        function renderTasks() {
+            let list = document.getElementById('taskList')
+            list.innerHTML = ''
+            tasks.forEach((element, idx) => {
+                let needToCreate = `<li>
+                <p>${element}</p>
+                <span>
+                    <button onclick="editTask(${idx})">Edit</button>
+                    <button onclick='deleteTask(${idx})'>Delete</button>
+                </span>
+            </li>`
+
+                list.innerHTML += needToCreate
+
+            });
+
+        }
+
+
+        function editTask(idx) {
+            let newValue = prompt("Enter new value")
+            console.log(idx)
+            tasks[idx] = newValue;
+            localStorage.setItem('tasks', JSON.stringify(tasks))
+            renderTasks();
+        }
+
+        function deleteTask(idx) {
+            tasks.splice(idx, 1);
+            localStorage.setItem('tasks', JSON.stringify(tasks))
+            renderTasks();
+        }
+
+        function handleClear() {
+            localStorage.clear();
+            tasks = []
+
+            renderTasks();
+
+        }
+
+        renderTasks();
+
+    </script>
+
+</body>
+
+</html>

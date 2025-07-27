@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .bigHeading {
+            font-size: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <header>This is header</header>
+    <header>This is header</header>
+    <div id="title">Hello World</div>
+
+    <button id="btn">Change Text</button>
+
+    <script>
+
+
+        let myHeader = document.getElementsByTagName('header')
+
+        console.log(myHeader)
+
+        let myTitle = document.getElementById('title')
+        let myBtn = document.getElementById('btn');
+
+        // setTimeout(() => {
+        //     myBtn.click()
+        // }, 5000)
+
+
+        myBtn.addEventListener('click', function () {
+            myTitle.innerHTML = "<h1 class=\"bigHeading\" > Hello for js</h1 > "
+            myTitle.style.backgroundColor = "red";
+            myTitle.style.color = "white"
+
+        })
+
+
+        // console.dir(myTitle)
+        // console.dir(document)
+
+
+    </script>
+
+</body>
+
+</html>

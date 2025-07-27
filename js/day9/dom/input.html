@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <form action="">
+
+        <input type="password" placeholder="Enter your password">
+        <button type="button" onclick="showPassword()">Show Password</button>
+    </form>
+
+    <script>
+        function showPassword() {
+            let inputField = document.querySelector('form input')
+            console.dir(inputField)
+            // inputField.type = "text"
+            if (inputField.type === "password") {
+                inputField.type = "text"
+            } else {
+                inputField.type = "password"
+            }
+        }
+    </script>
+</body>
+
+</html>
