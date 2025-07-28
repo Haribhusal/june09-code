@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+
+<body class="min-h-screen flex justify-center items-center">
+
+    <div class="container max-w-2xl mx-auto shadow p-10 rounded-md">
+        <h3 class="text-xl font-bold text-blue-400">
+            Weather App
+        </h3>
+        <form action="" class="p-5 bg-gray-100 my-5 rounded-md flex justify-between" onsubmit="handleSubmit(event)">
+            <input id="inputElement" type="text" placeholder="Enter City"
+                class="flex-1 bg-white px-5 py-3 rounded-s-md">
+            <button class="bg-blue-500 px-5 text-white rounded-e-md" type="submit">Submit</button>
+        </form>
+        <div class="weather_data">
+        </div>
+    </div>
+    <script>
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            let iElement = document.getElementById('inputElement');
+            let eValue = iElement.value.trim();
+            if (!eValue) {
+                return;
+            }
+            fetchData(eValue)
+        }
+
+        async function fetchData(cityName) {
+            let key = "14d767be9d634377ac2122148252707"
+            let url = `https://api.weatherapi.com/v1/current.json?key=${key}&q=${cityName}`
+
+            try {
+                let res = await fetch(url);
+                let data = await res.json();
+                displayData(data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+
+
+        function displayData(d) {
+            const { location, current } = d;
+            // console.log(location)
+            const { name } = location;
+            const { condition, humidity, uv } = current
+            const { text, icon } = condition;
+
+            let createStructure = `
+            <div>
+            <h1 class="text-2xl font-bold text-blue-500">Weather of ${name} </h1>
+           <div class="flex gap-3"> 
+             <p>Condition : ${text}</p>
+             <p>Humidity : ${humidity}</p>
+             <p>UV : ${uv}</p>
+            <img src='https:${icon}'/>
+            </div>
+            </div>
+            `
+            let showingDataElement = document.querySelector('.weather_data');
+            showingDataElement.innerHTML = createStructure
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
