@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            position: relative;
+            width: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="animate">Click to animate div</button>
+    <button id="stop">Stop</button>
+    <script src="./jquery-3.7.1.min.js"></script>
+    <div>This is a div to animate</div>
+    <script>
+
+        $(document).ready(function () {
+
+            // $('#stop').click(function () {
+            //     $('div').stop();
+            // })
+
+            $('#animate').click(function () {
+                $(this).slideToggle(200).fadeIn(2000).hide('fast');
+            })
+
+            // $("#animate").click(function () {
+            //     var div = $("div");
+            //     div.animate({ height: '300px', opacity: '0.4' }, "slow");
+            //     div.animate({ width: '300px', opacity: '0.8' }, "slow");
+            //     div.animate({ height: '100px', opacity: '0.4' }, "fast");
+            //     div.animate({ width: '100px', opacity: '0.8' }, 4000);
+            // });
+            // $("button").click(function () {
+            //     $("div").animate({
+            //         left: '+=250px',
+            //         height: 'toggle',
+            //     });
+            // });
+        })
+    </script>
+</body>
+
+</html>

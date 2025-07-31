@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+    <form action="">
+        <input type="text">
+        <button>submit</button>
+    </form>
+    <h1>Hello JQUERY</h1>
+    <input type="text">
+
+    <script src="./jquery-3.7.1.min.js"></script>
+    <script>
+
+
+
+        $(document).ready(function () {
+
+
+            $('button').on({
+                click: function () {
+                    alert('i am clicked')
+                },
+                mouseenter: function () {
+                    $(this).css("background-color", "red");
+                },
+                mouseleave: function () {
+                    $(this).css("background-color", "green");
+                },
+
+            })
+
+            $(window).resize(function () {
+                // Your code to be executed when the window is resized
+                console.log("Window resized!");
+                // Example: Adjust element dimensions, change font sizes, etc.
+            });
+
+
+            // $(this).resize(function (event) {
+            //     console.log(event)
+            // })
+
+            $('form').submit(function (event) {
+                event.preventDefault();
+                console.log("Form is submitting")
+            })
+            // $('input').keydown((event) => console.log(event.keyCode))
+
+
+
+
+            // $("h1").mouseenter(function () {
+            //     $(this).css({ 'background-color': "red" })
+            // });
+            // $("h1").mouseleave(function () {
+            //     $(this).css({ 'background-color': "blue" })
+            // });
+
+        });
+
+
+        // $(function () {
+
+        //     let item = document.querySelector('h1');
+        //     item.addEventListener('mouseenter', function () {
+        //         this.style.backgroundColor = "red"
+        //     })
+
+        //     // jQuery methods go here...
+
+        // });
+    </script>
+</body>
+
+</html>

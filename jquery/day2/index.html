@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css"> -->
+
+    <link rel="stylesheet" href="./OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="./OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css">
+
+    <style>
+        .carousel_wrapper {
+            position: relative;
+        }
+
+        .carousel_wrapper .owl-nav {
+            position: absolute;
+            top: 50%;
+            /* background-color: red; */
+            z-index: 99;
+            width: 100%;
+            margin-top: 0px;
+            display: flex;
+            transform: translateY(-50%);
+            justify-content: space-between;
+
+        }
+
+        .carousel_wrapper .owl-dots {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .carousel_wrapper .owl-prev,
+        .carousel_wrapper .owl-next {
+            height: 30px;
+            width: 30px;
+            background-color: yellow !important;
+            color: black;
+        }
+
+        .typewriter_effect {
+            background-color: transparent !important;
+
+            font-size: 30px !important;
+            color: red !important;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="typewriter_effect" type="text" data-placeholder></div>
+
+
+
+    <div class="owl-carousel owl-theme carousel_wrapper">
+        <div class="item">
+            <img src="https://picsum.photos/id/12/1000/600" alt="">
+        </div>
+        <div class="item">
+            <img src="https://picsum.photos/id/13/1000/600" alt="">
+
+        </div>
+        <div class="item">
+            <img src="https://picsum.photos/id/14/1000/600" alt="">
+        </div>
+        <div class="item">
+            <img src="https://picsum.photos/id/15/1000/600" alt="">
+        </div>
+        <div class="item">
+            <img src="https://picsum.photos/id/16/1000/600" alt="">
+        </div>
+        <div class="item">
+            <img src="https://picsum.photos/id/12/1000/600" alt="">
+        </div>
+        <div class="item">
+            <img src="https://picsum.photos/id/13/1000/600" alt="">
+
+        </div>
+        <div class="item">
+            <img src="https://picsum.photos/id/14/1000/600" alt="">
+        </div>
+        <div class="item">
+            <img src="https://picsum.photos/id/15/1000/600" alt="">
+        </div>
+        <div class="item">
+            <img src="https://picsum.photos/id/16/1000/600" alt="">
+        </div>
+
+    </div>
+
+
+    <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dignissimos dolorem architecto ullam assumenda,
+        aut iusto commodi cumque maiores est magni et delectus similique id aspernatur placeat recusandae reprehenderit.
+        Labore?
+    </p>
+
+    <script src="./jquery-3.7.1.min.js"></script>
+    <script src="./OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
+    <script src="./Simulate-Typing-Strings-HumanTyping/jquery.humanTyping.min.js"></script>
+    <script>
+        var typingPh = [
+            "Lorem         Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum dignissimos dolorem architecto ullam assumenda",
+            "Namaste",
+            "Hi"
+        ];
+
+        $('.typewriter_effect').humanTyping(typingPh, 1000);
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.owl-carousel').owlCarousel({
+                loop: true,
+                autoplay: true,
+                margin: 10,
+                autoplayTimeout: 2000,
+                nav: true,
+                dots: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        dots: true,
+                        nav: false,
+                    },
+                    600: {
+                        items: 3,
+                        dots: false,
+                        nav: true
+                    },
+                    1000: {
+                        items: 5
+                    }
+                }
+            })
+        });
+    </script>
+</body>
+
+</html>

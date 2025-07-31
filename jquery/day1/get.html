@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="test">
+        <p>Hello Paragraph</p>
+        <u>I have test text</u>
+    </div>
+
+
+    <a id="btn1">Button 1</a>
+    <div id="btn2">Button 2</div>
+
+    <script src="./jquery-3.7.1.min.js"></script>
+    <script>
+        $("#btn1").click(function () {
+            $(this).attr("href", "https://www.w3schools.com/jquery/");
+            // console.dir($("#btn1").attr('id'))
+            // console.log(attrs)
+            // $('#test').text('Changed from jquery');
+            // alert("Text: " + $("#test").text());
+        });
+        $("#btn2").click(function () {
+            alert("HTML: " + $("#test").html());
+        });
+    </script>
+</body>
+
+</html>

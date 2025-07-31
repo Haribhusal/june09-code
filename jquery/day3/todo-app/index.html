@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+</head>
+
+<body class="h-screen bg-blue-200">
+
+    <div class="container max-w-sm bg-white mx-auto p-5">
+        <h3 class="title text-2xl font-bold mb-5">Task Management Application</h3>
+        <form action="" class="bg-blue-200 p-3 flex justify-between gap-3 flex-col sm:flex-row  items-stretch">
+            <input type="text" placeholder="Enter task" class="flex-1 bg-white px-3 py-2">
+            <button id="btn_submit" class="bg-blue-600 min-w-24 text-sm text-white px-3 ">Submit Task</button>
+        </form>
+        <ul class="tasks space-y-3 my-5">
+            <li class="">
+                <div class="flex justify-between items-start">
+                    <span>Lorem ipsum, dolor sit amet consectetur adipisicing.</span>
+                    <span class="flex gap-2">
+                        <button class="bg-blue-500 text-sm px-3 py-1 rounded-sm text-white">Edit</button>
+                        <button class="bg-red-500 text-sm px-3 py-1 rounded-sm text-white">Delete</button>
+                    </span>
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+
+        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        let isEdit = false;
+        let currentEditIndex = null;
+
+        const saveTasks = () => {
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        };
+
+        const renderTasks = () => {
+            $('#taskList').empty();
+            tasks.forEach((task, index) => {
+                $('#taskList').append(`
+                    <li class="bg-blue-50 p-3 rounded shadow-sm">
+                        <div class="flex justify-between items-center">
+                            <span>${task}</span>
+                            <span class="flex gap-2">
+                                <button onclick="editTask(${index})" class="bg-blue-500 text-white text-sm px-3 py-1 rounded">Edit</button>
+                                <button onclick="deleteTask(${index})" class="bg-red-500 text-white text-sm px-3 py-1 rounded">Delete</button>
+                            </span>
+                        </div>
+                    </li>
+                `);
+            });
+        };
+
+        $('#taskForm').submit(function (e) {
+            e.preventDefault();
+            const inputVal = $('#taskInput').val().trim();
+            if (!inputVal) return;
+
+            if (isEdit && currentEditIndex !== null) {
+                tasks[currentEditIndex] = inputVal;
+                isEdit = false;
+                currentEditIndex = null;
+                $('#btn_submit').text('Submit Task');
+            } else {
+                tasks.push(inputVal);
+            }
+
+            $('#taskInput').val('');
+            saveTasks();
+            renderTasks();
+        });
+
+        window.editTask = function (index) {
+            $('#taskInput').val(tasks[index]);
+            $('#btn_submit').text('Update Task');
+            isEdit = true;
+            currentEditIndex = index;
+        };
+
+        window.deleteTask = function (index) {
+            tasks.splice(index, 1);
+            saveTasks();
+            renderTasks();
+        };
+
+        renderTasks();
+    </script>
+</body>
+
+</html>
