@@ -3,10 +3,9 @@ import { useParams } from 'react-router'
 import useFetch from '../hooks/useFetch';
 
 const NewsDetailsPage = () => {
+
     let { id } = useParams();
-
     let { data, loading, error, refetch } = useFetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-
 
     if (error) {
         return (
