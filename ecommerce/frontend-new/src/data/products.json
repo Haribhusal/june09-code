@@ -1,0 +1,73 @@
+[
+    {
+      "title": "Wireless Headphones",
+      "description": "High-quality noise-canceling headphones with long battery life.",
+      "price": 99.99,
+      "imagePath": "https://images.pexels.com/photos/3394663/pexels-photo-3394663.jpeg",
+      "category": "Electronics"
+    },
+    {
+      "title": "Running Shoes",
+      "description": "Lightweight and durable running shoes for all terrains.",
+      "price": 69.99,
+      "imagePath": "https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg",
+      "category": "Footwear"
+    },
+    {
+      "title": "Smart Watch",
+      "description": "Track your health and stay connected with this stylish smartwatch.",
+      "price": 149.99,
+      "imagePath": "https://images.pexels.com/photos/5081925/pexels-photo-5081925.jpeg",
+      "category": "Electronics"
+    },
+    {
+      "title": "Leather Wallet",
+      "description": "Premium leather wallet with multiple card slots and ID window.",
+      "price": 29.99,
+      "imagePath": "https://images.pexels.com/photos/8532617/pexels-photo-8532617.jpeg",
+      "category": "Accessories"
+    },
+    {
+      "title": "Backpack",
+      "description": "Spacious and water-resistant backpack for daily use.",
+      "price": 45.00,
+      "imagePath": "https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg",
+      "category": "Bags"
+    },
+    {
+      "title": "Coffee Maker",
+      "description": "Brew your perfect cup with this programmable coffee maker.",
+      "price": 79.99,
+      "imagePath": "https://images.pexels.com/photos/5591668/pexels-photo-5591668.jpeg",
+      "category": "Home Appliances"
+    },
+    {
+      "title": "Bluetooth Speaker",
+      "description": "Portable speaker with rich bass and long battery life.",
+      "price": 39.99,
+      "imagePath": "https://images.pexels.com/photos/63703/pexels-photo-63703.jpeg",
+      "category": "Electronics"
+    },
+    {
+      "title": "Sunglasses",
+      "description": "Stylish polarized sunglasses for UV protection.",
+      "price": 19.99,
+      "imagePath": "https://images.pexels.com/photos/46710/pexels-photo-46710.jpeg",
+      "category": "Accessories"
+    },
+    {
+      "title": "Yoga Mat",
+      "description": "Non-slip, eco-friendly yoga mat for all types of workouts.",
+      "price": 24.99,
+      "imagePath": "https://images.pexels.com/photos/3823086/pexels-photo-3823086.jpeg",
+      "category": "Fitness"
+    },
+    {
+      "title": "Gaming Mouse",
+      "description": "Ergonomic mouse with programmable buttons and RGB lighting.",
+      "price": 59.99,
+      "imagePath": "https://images.pexels.com/photos/4792737/pexels-photo-4792737.jpeg",
+      "category": "Electronics"
+    }
+  ]
+  
