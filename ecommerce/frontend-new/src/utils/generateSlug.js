@@ -1,8 +1,8 @@
 export default function generateSlug(text) {
-    return text
-      .toString()
-      .toLowerCase()
-      .trim()
-      .replace(/[\s\W-]+/g, '-')    // Replace spaces and non-word characters with hyphens
-      .replace(/^-+|-+$/g, '');     // Remove leading/trailing hyphens
-  }
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/[\s\W-]+/g, '-')    // Replace spaces and non-word characters with hyphens
+    .replace(/^-+|-+$/g, '');     // Remove leading/trailing hyphens
+}

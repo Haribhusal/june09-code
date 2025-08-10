@@ -5,6 +5,7 @@ import generateSlug from '../utils/generateSlug'
 
 
 
+
 const ProductDetailPage = () => {
   const [productData, setProductData] = useState({});
 
