@@ -5,6 +5,7 @@ import generateSlug from './../utils/generateSlug'
 
 import { useDispatch } from 'react-redux'
 import { addItemToCart } from './../redux/features/cartSlice'
+import { toast } from 'sonner'
 
 const ProductsPage = () => {
 
@@ -42,7 +43,12 @@ const ProductsPage = () => {
                     {/* Rs. {(p.price*140).toFixed(0)} */}
                     Rs. {Math.ceil(p.price * 140)}
                   </div>
-                  <button onClick={() => dispatch(addItemToCart(p))} className='custom_button'>
+                  <button onClick={() => {
+
+                    dispatch(addItemToCart(p))
+                    toast.success(`${p.title} has been added to the cart`)
+                  }
+                  } className='custom_button'>
                     Add To Cart
                   </button>
                 </div>

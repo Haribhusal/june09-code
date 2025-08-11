@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import generateSlug from "../../utils/generateSlug";
+import { toast } from "sonner";
 
 const initialState = {
     cartItems: []
@@ -29,9 +30,37 @@ export const cartSlice = createSlice({
                 // increase quantity if already exists
                 existingItem.quantity += 1;
             }
+        },
+        decrementQuantity: (state, action) => {
+            const item = action.payload;
+
+            const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
+            if (existingItem) {
+
+
+                // increase quantity if already exists
+                if (existingItem.quantity > 1) {
+                    existingItem.quantity -= 1;
+                } else {
+                    state.cartItems = state.cartItems.filter(cartItem => cartItem.id !== item.id);
+                    toast.success('Item also removed')
+                }
+            }
+
+        },
+        deleteItem: (state, action) => {
+            const item = action.payload;
+
+            const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
+
+
+            if (existingItem) {
+                state.cartItems = state.cartItems.filter(cartItem => cartItem.id !== item.id);
+
+            }
         }
     }
 
 })
-export const { addItemToCart, incrementQuantity } = cartSlice.actions;
+export const { addItemToCart, incrementQuantity, decrementQuantity, deleteItem } = cartSlice.actions;
 export default cartSlice.reducer;
