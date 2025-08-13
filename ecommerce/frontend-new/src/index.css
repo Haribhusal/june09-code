@@ -1,7 +1,11 @@
 @import "tailwindcss";
 
-@layer base{
-  .custom_button{ 
+@layer base {
+  .custom_button {
     @apply bg-gray-800 text-white px-3 py-2 rounded-md
+  }
+
+  .custom_input {
+    @apply px-3 py-2 rounded-md outline border-none block w-full mb-3 mt-1
   }
 }

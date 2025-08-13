@@ -15,6 +15,7 @@ router.post('/register', validateRequest(registerSchema), async (req, res) => {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({
+        existingUser: true,
         message: 'User with this email already exists'
       });
     }
@@ -37,6 +38,7 @@ router.post('/register', validateRequest(registerSchema), async (req, res) => {
     );
 
     res.status(201).json({
+      success: true,
       message: 'User registered successfully',
       user: user.toJSON(),
       token
@@ -59,6 +61,7 @@ router.post('/login', validateRequest(loginSchema), async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({
+        success: false,
         message: 'Invalid email or password'
       });
     }
@@ -77,8 +80,8 @@ router.post('/login', validateRequest(loginSchema), async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
-
     res.json({
+      success: true,
       message: 'Login successful',
       user: user.toJSON(),
       token

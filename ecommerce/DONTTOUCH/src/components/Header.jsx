@@ -196,7 +196,7 @@ export default function Header() {
                     <Link to="/login">
                         <Button variant={'outline'}>Login</Button>
                     </Link>
-                       <Link to="/register">
+                    <Link to="/register">
                         <Button> Register</Button>
                     </Link>
                 </div>

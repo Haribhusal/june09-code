@@ -1,9 +1,9 @@
 const express = require('express');
 const Product = require('../models/Product');
-const { 
-  createProductSchema, 
-  updateProductSchema, 
-  productIdSchema 
+const {
+  createProductSchema,
+  updateProductSchema,
+  productIdSchema
 } = require('../validations/product');
 const { validateRequest } = require('../middleware/validation');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
@@ -14,19 +14,19 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const { page = 1, limit = 10, category, search, sort = 'createdAt' } = req.query;
-    
+
     const query = { isActive: true };
-    
+
     // Filter by category
     if (category) {
       query.category = category;
     }
-    
+
     // Search functionality
     if (search) {
       query.$text = { $search: search };
     }
-    
+
     const options = {
       page: parseInt(page),
       limit: parseInt(limit),
@@ -36,15 +36,15 @@ router.get('/', async (req, res) => {
         select: 'name email'
       }
     };
-    
+
     const products = await Product.find(query)
       .populate('createdBy', 'name email')
       .sort(options.sort)
       .limit(options.limit)
       .skip((options.page - 1) * options.limit);
-    
+
     const total = await Product.countDocuments(query);
-    
+
     res.json({
       products,
       pagination: {
@@ -67,22 +67,22 @@ router.get('/', async (req, res) => {
 router.get('/:id', validateRequest(productIdSchema), async (req, res) => {
   try {
     const { id } = req.validatedData;
-    
+
     const product = await Product.findById(id)
       .populate('createdBy', 'name email');
-    
+
     if (!product) {
       return res.status(404).json({
         message: 'Product not found'
       });
     }
-    
+
     if (!product.isActive) {
       return res.status(404).json({
         message: 'Product not available'
       });
     }
-    
+
     res.json({ product });
   } catch (error) {
     console.error('Get product error:', error);
@@ -98,12 +98,12 @@ router.post('/', authenticateToken, requireAdmin, validateRequest(createProductS
   try {
     const productData = req.validatedData;
     productData.createdBy = req.user._id;
-    
+
     const product = new Product(productData);
     await product.save();
-    
+
     await product.populate('createdBy', 'name email');
-    
+
     res.status(201).json({
       message: 'Product created successfully',
       product
@@ -122,20 +122,20 @@ router.put('/:id', authenticateToken, requireAdmin, validateRequest(updateProduc
   try {
     const { id } = req.params;
     const updateData = req.validatedData;
-    
+
     const product = await Product.findById(id);
-    
+
     if (!product) {
       return res.status(404).json({
         message: 'Product not found'
       });
     }
-    
+
     Object.assign(product, updateData);
     await product.save();
-    
+
     await product.populate('createdBy', 'name email');
-    
+
     res.json({
       message: 'Product updated successfully',
       product
@@ -153,17 +153,17 @@ router.put('/:id', authenticateToken, requireAdmin, validateRequest(updateProduc
 router.delete('/:id', authenticateToken, requireAdmin, validateRequest(productIdSchema), async (req, res) => {
   try {
     const { id } = req.validatedData;
-    
+
     const product = await Product.findById(id);
-    
+
     if (!product) {
       return res.status(404).json({
         message: 'Product not found'
       });
     }
-    
+
     await Product.findByIdAndDelete(id);
-    
+
     res.json({
       message: 'Product deleted successfully'
     });
@@ -180,7 +180,7 @@ router.delete('/:id', authenticateToken, requireAdmin, validateRequest(productId
 router.get('/categories/list', async (req, res) => {
   try {
     const categories = await Product.distinct('category');
-    
+
     res.json({
       categories: categories.filter(category => category)
     });

@@ -1,10 +1,35 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router'
+import { toast } from 'sonner'
+import { useAuth } from './../hooks/useAuth'
 
 
 const SiteHeader = () => {
+
+
+  const { user } = useAuth();
+  console.log(user)
+  const [token, setToken] = useState(null)
   let storedCartItems = useSelector((state) => state.cart.cartItems)
+
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    setToken(null)
+    toast.success("Logged out!")
+
+  }
+
+
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token')
+    setToken(storedToken)
+  }, [])
+
+
+
   return (
     <header className='border-b sticky top-0 bg-gray-50/70  backdrop-blur-sm border-gray-300 py-3'>
       <div className="container max-w-7xl mx-auto flex justify-between items-center">
@@ -25,8 +50,35 @@ const SiteHeader = () => {
               </span>
             </button>
           </Link>
-          <button className='outline px-3 py-2 rounded-md'>Login</button>
-          <button className='custom_button'>Register</button>
+
+
+          {token ?
+            <div className='flex gap-3 items-center'>
+              <div>
+                welcome {user.name} ({user.role})
+              </div>
+              {user.role === "admin" ?
+                <Link to={'/dashboard'}>
+                  <button className='outline px-3 py-2 rounded-md'>Dashboard</button>
+                </Link>
+                :
+                <Link to={'/auth/profile'}>
+                  <button className='outline px-3 py-2 rounded-md'>Profile</button>
+                </Link>
+              }
+
+              <button onClick={handleLogout} className='outline px-3 py-2 rounded-md'>Logout</button>
+            </div>
+            :
+            <div className='flex gap-3'>
+              <Link to={'/auth/login'}>
+                <button className='outline px-3 py-2 rounded-md'>Login</button>
+              </Link>
+              <Link to={'/auth/register'}>
+                <button className='custom_button'>Register</button>
+              </Link>
+            </div>
+          }
         </div>
       </div>
     </header>
