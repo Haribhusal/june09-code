@@ -46,6 +46,7 @@ router.get('/', async (req, res) => {
     const total = await Product.countDocuments(query);
 
     res.json({
+      success: true,
       products,
       pagination: {
         page: options.page,
@@ -105,6 +106,7 @@ router.post('/', authenticateToken, requireAdmin, validateRequest(createProductS
     await product.populate('createdBy', 'name email');
 
     res.status(201).json({
+      success: true,
       message: 'Product created successfully',
       product
     });
@@ -138,7 +140,8 @@ router.put('/:id', authenticateToken, requireAdmin, validateRequest(updateProduc
 
     res.json({
       message: 'Product updated successfully',
-      product
+      product,
+      success: true
     });
   } catch (error) {
     console.error('Update product error:', error);
@@ -165,6 +168,7 @@ router.delete('/:id', authenticateToken, requireAdmin, validateRequest(productId
     await Product.findByIdAndDelete(id);
 
     res.json({
+      success: true,
       message: 'Product deleted successfully'
     });
   } catch (error) {

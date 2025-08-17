@@ -8,18 +8,11 @@ import { useAuth } from './../hooks/useAuth'
 const SiteHeader = () => {
 
 
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
   console.log(user)
   const [token, setToken] = useState(null)
   let storedCartItems = useSelector((state) => state.cart.cartItems)
 
-
-  const handleLogout = () => {
-    localStorage.removeItem('token')
-    setToken(null)
-    toast.success("Logged out!")
-
-  }
 
 
 
@@ -57,17 +50,10 @@ const SiteHeader = () => {
               <div>
                 welcome {user.name} ({user.role})
               </div>
-              {user.role === "admin" ?
-                <Link to={'/dashboard'}>
-                  <button className='outline px-3 py-2 rounded-md'>Dashboard</button>
-                </Link>
-                :
-                <Link to={'/auth/profile'}>
-                  <button className='outline px-3 py-2 rounded-md'>Profile</button>
-                </Link>
-              }
-
-              <button onClick={handleLogout} className='outline px-3 py-2 rounded-md'>Logout</button>
+              <Link to={'/dashboard'}>
+                <button className='outline px-3 py-2 rounded-md'>Dashboard</button>
+              </Link>
+              <button onClick={logOut} className='outline px-3 py-2 rounded-md'>Logout</button>
             </div>
             :
             <div className='flex gap-3'>

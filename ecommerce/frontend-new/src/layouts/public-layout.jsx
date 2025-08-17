@@ -12,7 +12,7 @@ const PublicLayout = () => {
   return (
     <Provider store={store}>
       <div>
-        <Toaster position="top-center" />
+        <Toaster position="bottom-right" />
         <SiteHeader />
         <main>
           <Outlet />

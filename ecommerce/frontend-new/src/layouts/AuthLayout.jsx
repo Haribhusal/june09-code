@@ -5,7 +5,7 @@ import { Toaster } from 'sonner'
 const AuthLayout = () => {
     return (
         <div>
-            <Toaster position="top-center" />
+            <Toaster position="bottom-right" />
             <Outlet />
         </div>
     )

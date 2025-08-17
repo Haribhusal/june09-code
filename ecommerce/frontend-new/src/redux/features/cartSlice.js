@@ -13,7 +13,7 @@ export const cartSlice = createSlice({
         addItemToCart: (state, action) => {
             const item = action.payload;
             // find existing item by id
-            const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
+            const existingItem = state.cartItems.find(cartItem => cartItem._id === item._id);
 
             if (existingItem) {
                 // increase quantity if already exists
@@ -25,7 +25,7 @@ export const cartSlice = createSlice({
         },
         incrementQuantity: (state, action) => {
             const item = action.payload;
-            const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
+            const existingItem = state.cartItems.find(cartItem => cartItem._id === item._id);
             if (existingItem) {
                 // increase quantity if already exists
                 existingItem.quantity += 1;
@@ -34,7 +34,7 @@ export const cartSlice = createSlice({
         decrementQuantity: (state, action) => {
             const item = action.payload;
 
-            const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
+            const existingItem = state.cartItems.find(cartItem => cartItem._id === item._id);
             if (existingItem) {
 
 
@@ -42,7 +42,7 @@ export const cartSlice = createSlice({
                 if (existingItem.quantity > 1) {
                     existingItem.quantity -= 1;
                 } else {
-                    state.cartItems = state.cartItems.filter(cartItem => cartItem.id !== item.id);
+                    state.cartItems = state.cartItems.filter(cartItem => cartItem._id !== item._id);
                     toast.success('Item also removed')
                 }
             }
@@ -50,12 +50,9 @@ export const cartSlice = createSlice({
         },
         deleteItem: (state, action) => {
             const item = action.payload;
-
-            const existingItem = state.cartItems.find(cartItem => cartItem.id === item.id);
-
-
+            const existingItem = state.cartItems.find(cartItem => cartItem._id === item._id);
             if (existingItem) {
-                state.cartItems = state.cartItems.filter(cartItem => cartItem.id !== item.id);
+                state.cartItems = state.cartItems.filter(cartItem => cartItem._id !== item._id);
 
             }
         }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 import { useForm } from "react-hook-form"
@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { toast } from 'sonner'
-import { useNavigate } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
+
 
 
 
@@ -42,13 +43,23 @@ const schemaForProduct = yup.object({
         .integer('Stock must be an integer')
         .min(0, 'Stock cannot be negative')
         .required('Stock is required'),
+
+    image: yup
+        .string()
+        .url('Image must be a valid URL')
 });
 
 
 
-const AddProductPage = () => {
-    const navigate = useNavigate();
+const EditProductPage = () => {
+    const { id } = useParams();
+    console.log(id)
+
     const [loading, setLoading] = useState(false)
+    const [productData, setProductData] = useState({})
+    const navigate = useNavigate();
+
+    console.log(productData)
 
     const {
         register,
@@ -65,8 +76,8 @@ const AddProductPage = () => {
 
         try {
             setLoading(true)
-            let res = await fetch('http://localhost:5555/api/products', {
-                method: "POST",
+            let res = await fetch(`http://localhost:5555/api/products/${id}`, {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
@@ -93,11 +104,54 @@ const AddProductPage = () => {
         console.log(responseData)
     }
 
+
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                setLoading(true)
+                let res = await fetch(`http://localhost:5555/api/products/${id}`);
+                let data = await res.json();
+
+                if (data?.product) {
+                    setProductData(data.product);
+                    // Populate form fields
+                    reset({
+                        name: data.product.name || '',
+                        description: data.product.description || '',
+                        price: data.product.price || '',
+                        category: data.product.category || '',
+                        stock: data.product.stock || '',
+                        image: data.product.image || ''
+                    });
+                }
+
+                setProductData(data.product)
+
+                if (data.success) {
+                    toast.success(data.message || "Updated successfully")
+                    navigate('/dashboard/all-products')
+                }
+
+            } catch (error) {
+                console.log(error)
+            } finally {
+                setLoading(false)
+            }
+
+        }
+        fetchProduct();
+    }, [id])
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
+
     return (
         <div className='py-10'>
             <div className="container max-w-md mx-auto p-10 bg-white">
                 <div className="heading mb-5">
-                    <h3 className='text-3xl font-bold'>Add New Product</h3>
+                    <h3 className='text-3xl font-bold'>Edit Product</h3>
                 </div>
                 <form action="" onSubmit={handleSubmit(onSubmit)} className=''>
                     {/* name, description, price, category,stock, image */}
@@ -130,8 +184,14 @@ const AddProductPage = () => {
                     </div>
                     <div className="form-group">
                         <label htmlFor="stock">Stock*</label>
-                        <input type='number' className='custom_input' placeholder='Enter stock' defaultValue="" {...register("stock")} />
+                        <input className='custom_input' placeholder='Enter stock' defaultValue="" {...register("stock")} />
                         {errors.stock && <p className='custom_error'>{errors.stock.message}</p>}
+
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="image">Product Image</label>
+                        <input className='custom_input' placeholder='Enter Image Path' defaultValue="" {...register("image")} />
+                        {errors.image && <p className='custom_error'>{errors.image.message}</p>}
 
                     </div>
                     <button className='custom_button' type="submit" >{loading ? 'Submitting...' : "Submit"}</button>
@@ -142,4 +202,4 @@ const AddProductPage = () => {
     )
 }
 
-export default AddProductPage
+export default EditProductPage

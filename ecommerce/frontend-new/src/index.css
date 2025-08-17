@@ -8,4 +8,12 @@
   .custom_input {
     @apply px-3 py-2 rounded-md outline border-none block w-full mb-3 mt-1
   }
+
+  .custom_error {
+    @apply text-red-500 text-sm bg-red-50 px-5 py-3 my-2 rounded-md
+  }
+
+  button {
+    @apply cursor-pointer hover:bg-gray-700 hover:text-white transition-all duration-300
+  }
 }

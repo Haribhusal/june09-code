@@ -1,6 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+
 import App from './App.jsx'
 import { RouterProvider, createBrowserRouter } from 'react-router'
 import PublicLayout from './layouts/public-layout.jsx'
@@ -14,6 +18,10 @@ import LoginPage from './pages/auth/LoginPage.jsx'
 import DashboardLayout from './layouts/DashboardLayout.jsx'
 import DashboardPage from './pages/dashboard/DashboardPage.jsx'
 import AddProductPage from './pages/dashboard/AddProductPage.jsx'
+import AllProductsPage from './pages/dashboard/AllProductsPage.jsx'
+import EditProductPage from './pages/dashboard/EditProductPage.jsx'
+import CheckoutPage from './pages/CheckoutPage.jsx'
+
 const ourRoutes = createBrowserRouter([
   {
     path: '/',
@@ -28,13 +36,17 @@ const ourRoutes = createBrowserRouter([
         element: <ProductsPage />
       },
       {
-        path: '/product-details/:slug',
+        path: '/product-details/:id',
         element: <ProductDetailPage />
       },
       {
         path: '/cart',
         element: <CartPage />
       },
+      {
+        path: "/checkout",
+        element: <CheckoutPage />
+      }
     ]
   },
   {
@@ -67,6 +79,14 @@ const ourRoutes = createBrowserRouter([
       {
         path: 'add-product',
         element: <AddProductPage />
+      },
+      {
+        path: 'all-products',
+        element: <AllProductsPage />
+      },
+      {
+        path: 'edit-product/:id',
+        element: <EditProductPage />
       }
 
     ]

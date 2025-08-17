@@ -16,7 +16,6 @@ const createProductSchema = z.object({
   stock: z.number()
     .int('Stock must be an integer')
     .min(0, 'Stock cannot be negative'),
-  image: z.string().url('Image must be a valid URL').optional().nullable()
 });
 
 const updateProductSchema = z.object({
@@ -40,7 +39,6 @@ const updateProductSchema = z.object({
     .int('Stock must be an integer')
     .min(0, 'Stock cannot be negative')
     .optional(),
-  image: z.string().url('Image must be a valid URL').optional().nullable(),
   isActive: z.boolean().optional()
 });
 

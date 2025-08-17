@@ -1,7 +1,19 @@
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
+
 
 export function useAuth() {
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    const logOut = () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
+        setUser(null);
+        navigate("/auth/login");
+        toast.success("Logged out successfully");
+    }
 
     useEffect(() => {
         // Get user from localStorage on mount
@@ -13,6 +25,7 @@ export function useAuth() {
                 setUser(null);
             }
         }
+
 
         // Watch for changes to localStorage from other tabs/components
         const handleStorageChange = () => {
@@ -31,5 +44,6 @@ export function useAuth() {
     }, []);
 
 
-    return { user };
+
+    return { user, logOut };
 }
