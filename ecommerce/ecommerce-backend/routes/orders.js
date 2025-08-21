@@ -8,6 +8,8 @@ const {
 } = require('../validations/order');
 const { validateRequest } = require('../middleware/validation');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
+const { sendEmail, sendEmailToAdmin } = require('../utils/sendEmail');
+const { safelyPopulateOrder, safelyPopulateOrders, cleanupOrphanedOrders } = require('../utils/safePopulate');
 
 const router = express.Router();
 
@@ -75,6 +77,55 @@ router.post('/', authenticateToken, validateRequest(createOrderSchema), async (r
 
     await order.populate('user', 'name email');
 
+    // send email to user
+    if (!order.user || !order.user.email || !order.user.name) {
+      console.error('User data not properly populated for new order:', order._id);
+      return res.status(500).json({
+        message: 'Error: User data not found for this order'
+      });
+    }
+
+    const email = order.user.email;
+    const name = order.user.name;
+    const orderId = order._id;
+    const orderDate = order.createdAt;
+    const orderTotal = order.totalAmount;
+    const orderStatus = order.status;
+
+    // Filter out items with null products and create safe order items
+    const orderItemsTosend = order.items
+      .filter(item => item.product && item.product.name) // Only include items with valid products
+      .map(item => ({
+        product: item.product.name,
+        quantity: item.quantity,
+        price: item.price
+      }));
+
+    const orderItemsString = orderItemsTosend.length > 0
+      ? orderItemsTosend.map(item => `${item.product} - ${item.quantity} x ${item.price}`).join('\n')
+      : 'Product information unavailable';
+
+    const subject = 'Order created successfully';
+    const message = `Hello ${name},
+    Your order has been created successfully.
+    Order ID: ${orderId}
+    Order Date: ${orderDate}
+    Order Total: ${orderTotal}
+    Order Status: ${orderStatus}
+    Order Items: ${orderItemsString}
+    `;
+    await sendEmail(email, subject, message);
+
+    // send email to admin
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (adminEmail) {
+      const adminSubject = 'New order created';
+      const adminMessage = `New order created by ${name} with order ID ${orderId}`;
+      await sendEmailToAdmin(adminSubject, adminMessage, null, adminEmail);
+    } else {
+      console.warn('ADMIN_EMAIL not configured, skipping admin notification');
+    }
+
     res.status(201).json({
       success: true,
       message: 'Order created successfully',
@@ -101,19 +152,17 @@ router.get('/my-orders', authenticateToken, async (req, res) => {
     }
 
     const orders = await Order.find(query)
-      .populate({
-        path: 'items.product',
-        select: 'name description price image'
-      })
-      .populate('user', 'name email')
       .sort({ createdAt: -1 })
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
 
+    const populatedOrders = await safelyPopulateOrders(orders);
+
     const total = await Order.countDocuments(query);
 
     res.json({
-      orders,
+      success: true,
+      orders: populatedOrders,
       pagination: {
         page: parseInt(page),
         limit: parseInt(limit),
@@ -135,12 +184,7 @@ router.get('/:id', authenticateToken, validateRequest(orderIdSchema), async (req
   try {
     const { id } = req.validatedData;
 
-    const order = await Order.findById(id)
-      .populate({
-        path: 'items.product',
-        select: 'name description price image'
-      })
-      .populate('user', 'name email');
+    const order = await safelyPopulateOrder(id);
 
     if (!order) {
       return res.status(404).json({
@@ -181,19 +225,16 @@ router.get('/', authenticateToken, requireAdmin, async (req, res) => {
     }
 
     const orders = await Order.find(query)
-      .populate({
-        path: 'items.product',
-        select: 'name description price image'
-      })
-      .populate('user', 'name email')
       .sort({ createdAt: -1 })
       .limit(parseInt(limit))
       .skip((parseInt(page) - 1) * parseInt(limit));
 
+    const populatedOrders = await safelyPopulateOrders(orders);
     const total = await Order.countDocuments(query);
 
     res.json({
-      orders,
+      success: true,
+      orders: populatedOrders,
       pagination: {
         page: parseInt(page),
         limit: parseInt(limit),
@@ -227,6 +268,9 @@ router.patch('/:id/status', authenticateToken, requireAdmin, validateRequest(upd
     order.status = status;
     await order.save();
 
+
+
+    // send email to admin
     await order.populate({
       path: 'items.product',
       select: 'name description price image'
@@ -234,7 +278,61 @@ router.patch('/:id/status', authenticateToken, requireAdmin, validateRequest(upd
 
     await order.populate('user', 'name email');
 
+    // Log populated data for debugging
+    console.log('Populated order:', {
+      orderId: order._id,
+      userId: order.user?._id,
+      userName: order.user?.name,
+      userEmail: order.user?.email,
+      itemsCount: order.items?.length,
+      itemsWithProducts: order.items?.filter(item => item.product)?.length
+    });
+
+
+
+    // send email to user
+    if (!order.user || !order.user.email || !order.user.name) {
+      console.error('User data not properly populated for order:', order._id);
+      return res.status(500).json({
+        message: 'Error: User data not found for this order'
+      });
+    }
+
+    const email = order.user.email;
+    const name = order.user.name;
+    const orderId = order._id;
+    const orderDate = order.createdAt;
+    const orderTotal = order.totalAmount;
+    const orderStatus = order.status;
+
+    // Filter out items with null products and create safe order items
+    const orderItemsTosend = order.items
+      .filter(item => item.product && item.product.name) // Only include items with valid products
+      .map(item => ({
+        product: item.product.name,
+        quantity: item.quantity,
+        price: item.price
+      }));
+
+    const orderItemsString = orderItemsTosend.length > 0
+      ? orderItemsTosend.map(item => `${item.product} - ${item.quantity} x ${item.price}`).join('\n')
+      : 'Product information unavailable';
+
+    const subject = 'Order status updated';
+    const message = `Hello ${name},
+    Your order has been updated to ${status}.
+    Order ID: ${orderId}
+    Order Date: ${orderDate}
+    Order Total: ${orderTotal}
+    Order Status: ${orderStatus}
+    Order Items: ${orderItemsString}
+    `;
+    await sendEmail(email, subject, message);
+
+
+
     res.json({
+      success: true,
       message: 'Order status updated successfully',
       order
     });
@@ -277,5 +375,50 @@ router.get('/stats/overview', authenticateToken, requireAdmin, async (req, res) 
     });
   }
 });
+
+// Delete order
+router.delete('/:id', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const order = await Order.findByIdAndDelete(id);
+    if (!order) {
+      return res.status(404).json({
+        message: 'Order not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Order deleted successfully',
+      order
+    });
+  } catch (error) {
+    console.error('Delete order error:', error);
+    res.status(500).json({
+      message: 'Error deleting order',
+      error: process.env.NODE_ENV === 'development' ? error.message : {}
+    });
+  }
+});
+
+// Clean up orphaned orders (admin only)
+router.post('/cleanup-orphaned', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const result = await cleanupOrphanedOrders();
+
+    res.json({
+      success: true,
+      message: 'Cleanup completed successfully',
+      result
+    });
+  } catch (error) {
+    console.error('Cleanup orphaned orders error:', error);
+    res.status(500).json({
+      message: 'Error during cleanup',
+      error: process.env.NODE_ENV === 'development' ? error.message : {}
+    });
+  }
+});
+
 
 module.exports = router; 

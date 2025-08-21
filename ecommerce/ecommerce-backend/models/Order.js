@@ -80,4 +80,72 @@ orderSchema.pre('save', function (next) {
   next();
 });
 
+// Validate that products exist before saving
+orderSchema.pre('save', async function (next) {
+  if (this.items && this.items.length > 0) {
+    const mongoose = require('mongoose');
+    const Product = mongoose.model('Product');
+
+    try {
+      for (const item of this.items) {
+        if (item.product) {
+          const productExists = await Product.exists({ _id: item.product });
+          if (!productExists) {
+            return next(new Error(`Product with ID ${item.product} does not exist`));
+          }
+        }
+      }
+    } catch (error) {
+      return next(error);
+    }
+  }
+  next();
+});
+
+// Instance method to check if order has valid products
+orderSchema.methods.hasValidProducts = async function () {
+  if (!this.items || this.items.length === 0) {
+    return true;
+  }
+
+  const mongoose = require('mongoose');
+  const Product = mongoose.model('Product');
+
+  for (const item of this.items) {
+    if (item.product) {
+      const productExists = await Product.exists({ _id: item.product });
+      if (!productExists) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+};
+
+// Static method to find orders with orphaned products
+orderSchema.statics.findOrphanedOrders = async function () {
+  const mongoose = require('mongoose');
+  const Product = mongoose.model('Product');
+
+  const orders = await this.find({});
+  const orphanedOrders = [];
+
+  for (const order of orders) {
+    if (order.items && order.items.length > 0) {
+      for (const item of order.items) {
+        if (item.product) {
+          const productExists = await Product.exists({ _id: item.product });
+          if (!productExists) {
+            orphanedOrders.push(order);
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  return orphanedOrders;
+};
+
 module.exports = mongoose.model('Order', orderSchema); 

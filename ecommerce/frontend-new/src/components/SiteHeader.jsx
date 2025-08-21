@@ -36,7 +36,7 @@ const SiteHeader = () => {
         </nav>
         <div className="action flex gap-2 items-center">
           <Link to={'/cart'}>
-            <button className='relative px-10'>
+            <button className='relative px-5 py-2 rounded-md'>
               CART
               <span className='absolute bg-red-500 text-white px-2 py-1 rounded-md -top-3 text-sm'>
                 {storedCartItems.length}

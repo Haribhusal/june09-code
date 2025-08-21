@@ -103,7 +103,7 @@ const CheckoutPage = () => {
 
             if (responseData.success) {
                 toast.success("Order placed successfully!");
-                navigate("/dashboard/orders");
+                navigate("/dashboard/my-orders");
                 reset();
             } else {
                 toast.error(responseData.message || "Order failed");
@@ -159,7 +159,7 @@ const CheckoutPage = () => {
                             {/* street,city, state, zipCode, country */}
 
 
-                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                            <form className="space-y-5">
                                 {/* Shipping Address */}
                                 <h4 className="text-xl font-semibold">Shipping Address</h4>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -217,10 +217,10 @@ const CheckoutPage = () => {
                                     />
                                     {errors.notes && <p className="custom_error">{errors.notes.message}</p>}
                                 </div>
-
+                                {/* 
                                 <button className="custom_button w-full" type="submit">
                                     {loading ? "Submitting..." : "Place Order"}
-                                </button>
+                                </button> */}
                             </form>
 
 
@@ -248,7 +248,9 @@ const CheckoutPage = () => {
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button className='custom_button w-full justify-center my-5 flex gap-2 items-center'>Order Now
+                                <button onClick={handleSubmit(onSubmit)} className='custom_button w-full justify-center my-5 flex gap-2 items-center'>
+
+                                    {loading ? "Order Processing..." : "Place Order"}
                                     <ArrowRight />
                                 </button>
                             </div>

@@ -1,14 +1,9 @@
 import React, { useState } from 'react'
-
-
 import { useForm } from "react-hook-form"
-
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router'
-
-
 
 const schemaForProduct = yup.object({
     name: yup
@@ -42,55 +37,87 @@ const schemaForProduct = yup.object({
         .integer('Stock must be an integer')
         .min(0, 'Stock cannot be negative')
         .required('Stock is required'),
+
+    image: yup
+        .mixed()
+        .required('Product image is required')
+        .test('fileType', 'Only image files are allowed (JPEG, PNG, WebP)', (value) => {
+            if (!value || !value[0]) return true; // Skip if no file
+            return ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'].includes(value[0].type);
+        })
+        .test('fileSize', 'File size is too large. Maximum size is 5MB', (value) => {
+            if (!value || !value[0]) return true; // Skip if no file
+            return value[0].size <= 5 * 1024 * 1024; // 5MB
+        }),
 });
-
-
 
 const AddProductPage = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false)
+    const [selectedImage, setSelectedImage] = useState(null)
 
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
-        reset
+        reset,
+        setValue
     } = useForm({
         resolver: yupResolver(schemaForProduct),
     })
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setSelectedImage(file);
+            setValue('image', e.target.files);
+        }
+    };
+
     const onSubmit = async (data) => {
-        const token = localStorage.getItem("token"); // or your token key
+        const token = localStorage.getItem("token");
 
         try {
             setLoading(true)
+
+            // Create FormData for multipart/form-data submission
+            const formData = new FormData();
+            formData.append('name', data.name);
+            formData.append('description', data.description);
+            formData.append('price', data.price);
+            formData.append('category', data.category);
+            formData.append('stock', data.stock);
+
+            if (data.image && data.image[0]) {
+                formData.append('image', data.image[0]);
+            }
+
             let res = await fetch('http://localhost:5555/api/products', {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
+                    // Don't set Content-Type for FormData, let browser set it with boundary
                 },
-
-                body: JSON.stringify(data)
-
+                body: formData
             })
+
             let responseData = await res.json();
 
             if (responseData.success) {
                 toast.success(responseData.message)
                 navigate('/dashboard/all-products')
                 reset();
+                setSelectedImage(null);
+            } else {
+                toast.error(responseData.message || 'Failed to create product');
             }
         } catch (error) {
             console.log(error)
-
+            toast.error('An error occurred while creating the product');
         } finally {
             setLoading(false)
         }
-
-
-        console.log(responseData)
     }
 
     return (
@@ -100,7 +127,7 @@ const AddProductPage = () => {
                     <h3 className='text-3xl font-bold'>Add New Product</h3>
                 </div>
                 <form action="" onSubmit={handleSubmit(onSubmit)} className=''>
-                    {/* name, description, price, category,stock, image */}
+                    {/* name, description, price, category, stock, image */}
 
                     <div className="form-group">
                         <label htmlFor="name">Product Name*</label>
@@ -110,34 +137,60 @@ const AddProductPage = () => {
 
                     <div className="form-group">
                         <label htmlFor="description">Product Details*</label>
-
                         <textarea className='custom_input' rows={3} placeholder='Enter Description' defaultValue="" {...register("description", { required: true })}></textarea>
                         {errors.description && <p className='custom_error'>{errors.description.message}</p>}
-
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="price">Product Price*</label>
                         <input className='custom_input' placeholder='Enter Product Price' defaultValue="" {...register("price", { required: true })} />
                         {errors.price && <p className='custom_error'>{errors.price.message}</p>}
-
                     </div>
+
                     <div className="form-group">
                         <label htmlFor="category">Category*</label>
                         <input className='custom_input' placeholder='Enter Category' defaultValue="" {...register("category", { required: true })} />
                         {errors.category && <p className='custom_error'>{errors.category.message}</p>}
-
                     </div>
+
                     <div className="form-group">
                         <label htmlFor="stock">Stock*</label>
                         <input type='number' className='custom_input' placeholder='Enter stock' defaultValue="" {...register("stock")} />
                         {errors.stock && <p className='custom_error'>{errors.stock.message}</p>}
-
                     </div>
-                    <button className='custom_button' type="submit" >{loading ? 'Submitting...' : "Submit"}</button>
+
+                    <div className="form-group">
+                        <label htmlFor="image">Product Image*</label>
+                        <input
+                            type="file"
+                            className='custom_input'
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            {...register("image")}
+                        />
+                        {errors.image && <p className='custom_error'>{errors.image.message}</p>}
+
+                        {selectedImage && (
+                            <div className="mt-2">
+                                <p className="text-sm text-gray-600">
+                                    Selected: {selectedImage.name} ({(selectedImage.size / 1024 / 1024).toFixed(2)} MB)
+                                </p>
+                                <div className="mt-2">
+                                    <img
+                                        src={URL.createObjectURL(selectedImage)}
+                                        alt="Preview"
+                                        className="w-24 h-24 object-cover rounded border"
+                                    />
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <button className='custom_button' type="submit" disabled={loading}>
+                        {loading ? 'Submitting...' : "Submit"}
+                    </button>
                 </form>
             </div>
-
         </div>
     )
 }

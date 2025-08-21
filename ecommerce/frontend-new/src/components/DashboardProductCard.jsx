@@ -1,57 +1,31 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router'
-import { useDispatch } from 'react-redux'
-import { addItemToCart } from './../redux/features/cartSlice'
-import { toast } from 'sonner'
 
-const ProductCard = ({ p }) => {
-    const dispatch = useDispatch();
+const DashboardProductCard = ({ p }) => {
+    console.log('DashboardProductCard - Product data:', p);
     const [imageLoading, setImageLoading] = useState(true);
     const [imageError, setImageError] = useState(false);
 
     // Get the main image or first available image
     const getProductImage = () => {
-        // Debug: Log the product data to see what we're working with
-
-        // Use the imageUrls virtual field if available (from backend)
-        if (p.imageUrls && p.imageUrls.length > 0) {
-            // If there's a main image, use it
-            if (p.mainImage) {
-                const mainImg = p.imageUrls.find(img => img.filename === p.mainImage);
-                if (mainImg) {
-                    // Remove leading slash to avoid double slash issue
-                    const cleanUrl = mainImg.url.startsWith('/') ? mainImg.url.slice(1) : mainImg.url;
-                    const imageUrl = `http://localhost:5555/${cleanUrl}`;
-                    console.log('ProductCard - Using main image from imageUrls:', imageUrl);
-                    return imageUrl;
-                }
-            }
-            // Otherwise use the first image
-            const cleanUrl = p.imageUrls[0].url.startsWith('/') ? p.imageUrls[0].url.slice(1) : p.imageUrls[0].url;
-            const imageUrl = `http://localhost:5555/${cleanUrl}`;
-            console.log('ProductCard - Using first image from imageUrls:', imageUrl);
-            return imageUrl;
-        }
-
-        // Fallback to manual construction if imageUrls not available
         if (p.images && p.images.length > 0) {
             // If there's a main image, use it
             if (p.mainImage) {
                 const mainImg = p.images.find(img => img.filename === p.mainImage);
                 if (mainImg) {
                     const imageUrl = `http://localhost:5555/uploads/products/${mainImg.filename}`;
-                    console.log('ProductCard - Using main image from images:', imageUrl);
+                    console.log('DashboardProductCard - Using main image:', imageUrl);
                     return imageUrl;
                 }
             }
             // Otherwise use the first image
             const imageUrl = `http://localhost:5555/uploads/products/${p.images[0].filename}`;
-            console.log('ProductCard - Using first image from images:', imageUrl);
+            console.log('DashboardProductCard - Using first image:', imageUrl);
             return imageUrl;
         }
 
         // Fallback to a default image
-        console.log('ProductCard - No images found, using fallback');
+        console.log('DashboardProductCard - No images found, using fallback');
         return 'https://via.placeholder.com/400x400?text=No+Image';
     };
 
@@ -63,11 +37,6 @@ const ProductCard = ({ p }) => {
     const handleImageError = () => {
         setImageLoading(false);
         setImageError(true);
-    };
-
-    const handleAddToCart = () => {
-        dispatch(addItemToCart(p));
-        toast.success(`${p.name} has been added to the cart`);
     };
 
     // Skeleton loading component
@@ -98,8 +67,7 @@ const ProductCard = ({ p }) => {
                     {!imageError && (
                         <img
                             src={getProductImage()}
-                            className={`aspect-square rounded-md object-cover w-full h-64 transition-opacity duration-300 ${imageLoading ? 'opacity-0' : 'opacity-100'
-                                }`}
+                            className={`aspect-square rounded-md object-cover w-full h-64 transition-opacity duration-300 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
                             alt={p.name}
                             onLoad={handleImageLoad}
                             onError={handleImageError}
@@ -122,16 +90,13 @@ const ProductCard = ({ p }) => {
                     <div className="price text-xl font-bold">
                         Rs. {Math.ceil(p.price)}
                     </div>
-                    <button
-                        onClick={handleAddToCart}
-                        className='custom_button'
-                    >
-                        Add To Cart
-                    </button>
+                    <div className="text-sm text-gray-500">
+                        Stock: {p.stock}
+                    </div>
                 </div>
             </div>
         </article>
     )
 }
 
-export default ProductCard
+export default DashboardProductCard

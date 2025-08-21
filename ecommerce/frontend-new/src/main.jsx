@@ -21,11 +21,15 @@ import AddProductPage from './pages/dashboard/AddProductPage.jsx'
 import AllProductsPage from './pages/dashboard/AllProductsPage.jsx'
 import EditProductPage from './pages/dashboard/EditProductPage.jsx'
 import CheckoutPage from './pages/CheckoutPage.jsx'
+import ErrorPage from './pages/ErrorPage.jsx'
+import OrdersPage from './pages/dashboard/OrdersPage.jsx';
+import MyOrdersPage from './pages/dashboard/MyOrdersPage.jsx'
 
 const ourRoutes = createBrowserRouter([
   {
     path: '/',
     element: <PublicLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -87,6 +91,14 @@ const ourRoutes = createBrowserRouter([
       {
         path: 'edit-product/:id',
         element: <EditProductPage />
+      },
+      {
+        path: "orders",
+        element: <OrdersPage />
+      },
+      {
+        path: "my-orders",
+        element: <MyOrdersPage />
       }
 
     ]

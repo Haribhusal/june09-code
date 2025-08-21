@@ -7,15 +7,16 @@ const createProductSchema = z.object({
   description: z.string()
     .min(10, 'Description must be at least 10 characters long')
     .max(1000, 'Description must be less than 1000 characters'),
-  price: z.number()
+  price: z.coerce.number()
     .positive('Price must be positive')
     .min(0.01, 'Price must be at least 0.01'),
   category: z.string()
     .min(2, 'Category must be at least 2 characters long')
     .max(50, 'Category must be less than 50 characters'),
-  stock: z.number()
+  stock: z.coerce.number()
     .int('Stock must be an integer')
     .min(0, 'Stock cannot be negative'),
+  mainImage: z.string().optional(),
 });
 
 const updateProductSchema = z.object({
@@ -27,7 +28,7 @@ const updateProductSchema = z.object({
     .min(10, 'Description must be at least 10 characters long')
     .max(1000, 'Description must be less than 1000 characters')
     .optional(),
-  price: z.number()
+  price: z.coerce.number()
     .positive('Price must be positive')
     .min(0.01, 'Price must be at least 0.01')
     .optional(),
@@ -35,11 +36,12 @@ const updateProductSchema = z.object({
     .min(2, 'Category must be at least 2 characters long')
     .max(50, 'Category must be less than 50 characters')
     .optional(),
-  stock: z.number()
+  stock: z.coerce.number()
     .int('Stock must be an integer')
     .min(0, 'Stock cannot be negative')
     .optional(),
-  isActive: z.boolean().optional()
+  isActive: z.boolean().optional(),
+  mainImage: z.string().optional(),
 });
 
 const productIdSchema = z.object({
