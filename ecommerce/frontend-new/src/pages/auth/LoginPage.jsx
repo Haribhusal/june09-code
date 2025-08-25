@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'sonner';
+import { BACKEND_URL } from './../../config/config'
 
 
 const LoginPage = () => {
@@ -24,7 +25,7 @@ const LoginPage = () => {
 
         try {
 
-            let res = await fetch('http://localhost:5555/api/auth/login', {
+            let res = await fetch(`${BACKEND_URL}/api/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

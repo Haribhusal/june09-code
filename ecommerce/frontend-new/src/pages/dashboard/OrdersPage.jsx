@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { formatDistanceToNow, format } from 'date-fns'
 import formatPrice from './../../utils/formatPrice';
 import { toast } from 'sonner'
+import { BACKEND_URL } from './../../config/config'
+
 const OrdersPage = () => {
 
     const [orders, setOrders] = useState([])
@@ -21,7 +23,7 @@ const OrdersPage = () => {
 
         try {
             setLoading(true)
-            let res = await fetch('http://localhost:5555/api/orders', {
+            let res = await fetch(`${BACKEND_URL}/api/orders`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -50,7 +52,7 @@ const OrdersPage = () => {
         setActionLoading((prev) => ({ ...prev, [id]: status }));
 
         try {
-            let res = await fetch(`http://localhost:5555/api/orders/${id}/status`, {
+            let res = await fetch(`${BACKEND_URL}/api/orders/${id}/status`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -88,7 +90,7 @@ const OrdersPage = () => {
     const handleDeleteOrder = async (id) => {
         setActionLoading((prev) => ({ ...prev, [id]: "deleting" }));
         try {
-            const res = await fetch(`http://localhost:5555/api/orders/${id}`, {
+            const res = await fetch(`${BACKEND_URL}/api/orders/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${getToken()}`,

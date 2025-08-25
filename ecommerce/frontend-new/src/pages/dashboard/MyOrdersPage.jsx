@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import formatPrice from '../../utils/formatPrice';
 import { formatDistanceToNow, format } from 'date-fns'
+import { BACKEND_URL } from './../../config/config'
+
 const MyOrdersPage = () => {
 
     const [loading, setLoading] = useState(false);
@@ -9,7 +11,7 @@ const MyOrdersPage = () => {
     const getMyOrders = async () => {
         let token = localStorage.getItem('token')
         try {
-            let res = await fetch('http://localhost:5555/api/orders/my-orders', {
+            let res = await fetch(`${BACKEND_URL}/api/orders/my-orders`, {
                 method: "GET",
                 headers: {
                     'Content-Type': "application/json",

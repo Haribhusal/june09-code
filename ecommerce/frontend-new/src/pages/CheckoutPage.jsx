@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import KhaltiCheckout from 'khalti-checkout-web';
 import { Link } from 'react-router';
 import { useForm, useFieldArray } from "react-hook-form"
+import { BACKEND_URL } from './../config/config'
 
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -89,7 +90,7 @@ const CheckoutPage = () => {
 
         try {
             setLoading(true);
-            let res = await fetch("http://localhost:5555/api/orders", {
+            let res = await fetch(`${BACKEND_URL}/api/orders`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

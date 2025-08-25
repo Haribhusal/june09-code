@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 import ProductCard from './../components/ProductCard'
 import { Search, Filter } from 'lucide-react'
+import { BACKEND_URL } from './../config/config'
 
 const ProductsPage = () => {
   const [loading, setLoading] = useState(false)
@@ -40,7 +41,7 @@ const ProductsPage = () => {
   const fetchProducts = async (pageNo = 1, search = "", category = "") => {
     try {
       setLoading(true)
-      let url = `http://localhost:5555/api/products?page=${pageNo}`;
+      let url = `${BACKEND_URL}/api/products?page=${pageNo}`;
 
       if (search) {
         url += `&search=${encodeURIComponent(search)}`;
@@ -73,7 +74,7 @@ const ProductsPage = () => {
 
   const fetchCategories = async () => {
     try {
-      let res = await fetch('http://localhost:5555/api/products/categories/list');
+      let res = await fetch(`${BACKEND_URL}/api/products/categories/list`);
       let data = await res.json();
       setCategories(data.categories || []);
     } catch (error) {

@@ -3,6 +3,7 @@ import { useParams } from 'react-router'
 import formatPrice from '../utils/formatPrice'
 import { useDispatch } from 'react-redux'
 import { addItemToCart } from '../redux/features/cartSlice'
+import { BACKEND_URL } from './../config/config'
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const ProductDetailPage = () => {
     const fetchProduct = async () => {
       try {
         setLoading(true)
-        let res = await fetch(`http://localhost:5555/api/products/${id}`);
+        let res = await fetch(`${BACKEND_URL}/api/products/${id}`);
         let data = await res.json();
 
         if (data?.product) {
@@ -37,7 +38,7 @@ const ProductDetailPage = () => {
 
   const getProductImage = (image) => {
     if (image && image.filename) {
-      return `http://localhost:5555/uploads/products/${image.filename}`;
+      return `${BACKEND_URL}/uploads/products/${image.filename}`;
     }
     return 'https://via.placeholder.com/400x400?text=No+Image';
   };

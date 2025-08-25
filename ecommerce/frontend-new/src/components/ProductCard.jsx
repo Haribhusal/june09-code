@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { addItemToCart } from './../redux/features/cartSlice'
 import { toast } from 'sonner'
+import { BACKEND_URL } from './../config/config'
 
 const ProductCard = ({ p }) => {
     const dispatch = useDispatch();
@@ -21,14 +22,14 @@ const ProductCard = ({ p }) => {
                 if (mainImg) {
                     // Remove leading slash to avoid double slash issue
                     const cleanUrl = mainImg.url.startsWith('/') ? mainImg.url.slice(1) : mainImg.url;
-                    const imageUrl = `http://localhost:5555/${cleanUrl}`;
+                    const imageUrl = `${BACKEND_URL}/${cleanUrl}`;
                     console.log('ProductCard - Using main image from imageUrls:', imageUrl);
                     return imageUrl;
                 }
             }
             // Otherwise use the first image
             const cleanUrl = p.imageUrls[0].url.startsWith('/') ? p.imageUrls[0].url.slice(1) : p.imageUrls[0].url;
-            const imageUrl = `http://localhost:5555/${cleanUrl}`;
+            const imageUrl = `${BACKEND_URL}/${cleanUrl}`;
             console.log('ProductCard - Using first image from imageUrls:', imageUrl);
             return imageUrl;
         }
@@ -39,13 +40,13 @@ const ProductCard = ({ p }) => {
             if (p.mainImage) {
                 const mainImg = p.images.find(img => img.filename === p.mainImage);
                 if (mainImg) {
-                    const imageUrl = `http://localhost:5555/uploads/products/${mainImg.filename}`;
+                    const imageUrl = `${BACKEND_URL}/uploads/products/${mainImg.filename}`;
                     console.log('ProductCard - Using main image from images:', imageUrl);
                     return imageUrl;
                 }
             }
             // Otherwise use the first image
-            const imageUrl = `http://localhost:5555/uploads/products/${p.images[0].filename}`;
+            const imageUrl = `${BACKEND_URL}/uploads/products/${p.images[0].filename}`;
             console.log('ProductCard - Using first image from images:', imageUrl);
             return imageUrl;
         }

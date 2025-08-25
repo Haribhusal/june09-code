@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router'
+import { BACKEND_URL } from './../config/config'
 
 const DashboardProductCard = ({ p }) => {
     console.log('DashboardProductCard - Product data:', p);
@@ -13,13 +14,13 @@ const DashboardProductCard = ({ p }) => {
             if (p.mainImage) {
                 const mainImg = p.images.find(img => img.filename === p.mainImage);
                 if (mainImg) {
-                    const imageUrl = `http://localhost:5555/uploads/products/${mainImg.filename}`;
+                    const imageUrl = `${BACKEND_URL}/uploads/products/${mainImg.filename}`;
                     console.log('DashboardProductCard - Using main image:', imageUrl);
                     return imageUrl;
                 }
             }
             // Otherwise use the first image
-            const imageUrl = `http://localhost:5555/uploads/products/${p.images[0].filename}`;
+            const imageUrl = `${BACKEND_URL}/uploads/products/${p.images[0].filename}`;
             console.log('DashboardProductCard - Using first image:', imageUrl);
             return imageUrl;
         }

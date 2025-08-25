@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router'
+import { BACKEND_URL } from './../../config/config'
 
 const schemaForProduct = yup.object({
     name: yup
@@ -93,7 +94,7 @@ const AddProductPage = () => {
                 formData.append('image', data.image[0]);
             }
 
-            let res = await fetch('http://localhost:5555/api/products', {
+            let res = await fetch(`${BACKEND_URL}/api/products`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`

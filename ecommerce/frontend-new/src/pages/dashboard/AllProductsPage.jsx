@@ -25,7 +25,7 @@ const AllProductsPage = () => {
     const fetchProducts = async (pageNo = 1) => {
         try {
             setLoading(true)
-            let res = await fetch(`http://localhost:5555/api/products?page=${pageNo}`);
+            let res = await fetch(`${BACKEND_URL}/api/products?page=${pageNo}`);
             let data = await res.json();
             setProducts(data.products)
             setPagination(data.pagination)
@@ -51,7 +51,7 @@ const AllProductsPage = () => {
 
         try {
             setLoading(true)
-            let res = await fetch(`http://localhost:5555/api/products/${id}`, {
+            let res = await fetch(`${BACKEND_URL}/api/products/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

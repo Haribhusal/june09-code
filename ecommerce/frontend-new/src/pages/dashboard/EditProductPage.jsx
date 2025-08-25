@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { toast } from 'sonner'
 import { useNavigate, useParams } from 'react-router'
+import { BACKEND_URL } from './../../config/config'
 
 const schemaForProduct = yup.object({
     name: yup
@@ -79,7 +80,7 @@ const EditProductPage = () => {
 
         try {
             setUploadingImages(true);
-            const res = await fetch(`http://localhost:5555/api/products/${id}/images`, {
+            const res = await fetch(`${BACKEND_URL}/api/products/${id}/images`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -109,7 +110,7 @@ const EditProductPage = () => {
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch(`http://localhost:5555/api/products/${id}/images/${imageId}`, {
+            const res = await fetch(`${BACKEND_URL}/api/products/${id}/images/${imageId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -135,7 +136,7 @@ const EditProductPage = () => {
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch(`http://localhost:5555/api/products/${id}/main-image`, {
+            const res = await fetch(`${BACKEND_URL}/api/products/${id}/main-image`, {
                 method: "PATCH",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -164,7 +165,7 @@ const EditProductPage = () => {
 
         try {
             setLoading(true)
-            let res = await fetch(`http://localhost:5555/api/products/${id}`, {
+            let res = await fetch(`${BACKEND_URL}/api/products/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -191,7 +192,7 @@ const EditProductPage = () => {
     const fetchProduct = async () => {
         try {
             setLoading(true)
-            let res = await fetch(`http://localhost:5555/api/products/${id}`);
+            let res = await fetch(`${BACKEND_URL}/api/products/${id}`);
             let data = await res.json();
 
             if (data?.product) {
@@ -237,7 +238,7 @@ const EditProductPage = () => {
                             {productData.images.map((image) => (
                                 <div key={image.filename} className="relative">
                                     <img
-                                        src={`http://localhost:5555/uploads/products/${image.filename}`}
+                                        src={`${BACKEND_URL}/uploads/products/${image.filename}`}
                                         alt={image.originalName}
                                         className="w-full h-24 object-cover rounded border"
                                     />
