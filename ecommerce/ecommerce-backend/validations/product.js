@@ -10,6 +10,9 @@ const createProductSchema = z.object({
   price: z.coerce.number()
     .positive('Price must be positive')
     .min(0.01, 'Price must be at least 0.01'),
+  discount: z.coerce.number()
+    .positive('Discount must be positive')
+    .min(0, 'Discount cannot be negative'),
   category: z.string()
     .min(2, 'Category must be at least 2 characters long')
     .max(50, 'Category must be less than 50 characters'),
@@ -31,6 +34,11 @@ const updateProductSchema = z.object({
   price: z.coerce.number()
     .positive('Price must be positive')
     .min(0.01, 'Price must be at least 0.01')
+    .optional(),
+
+  discount: z.coerce.number()
+    .positive('Discount must be positive')
+    .min(0, 'Discount cannot be negative')
     .optional(),
   category: z.string()
     .min(2, 'Category must be at least 2 characters long')

@@ -89,7 +89,7 @@ const DashboardProductCard = ({ p }) => {
 
                 <div className="action mt-3 flex justify-between items-start gap-3 flex-col">
                     <div className="price text-xl font-bold">
-                        Rs. {Math.ceil(p.price)}
+                        Rs. {Math.ceil(p.price)} - ({p.discount}%)
                     </div>
                     <div className="text-sm text-gray-500">
                         Stock: {p.stock}

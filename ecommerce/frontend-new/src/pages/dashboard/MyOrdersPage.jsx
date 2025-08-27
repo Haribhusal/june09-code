@@ -77,6 +77,13 @@ const MyOrdersPage = () => {
                                         <strong> Total Amount:</strong> {o.totalAmount}
                                     </p>
                                     <p>
+                                        <strong>Shipping Charge:</strong> Rs. 200
+                                    </p>
+
+                                    <p>
+                                        <strong> Final Amount:</strong> {o.totalAmount + 200}
+                                    </p>
+                                    <p>
                                         <strong>Status:</strong> {o.status}
                                     </p>
                                     <p>

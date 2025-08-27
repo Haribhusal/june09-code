@@ -10,51 +10,7 @@ const ProductCard = ({ p }) => {
     const [imageLoading, setImageLoading] = useState(true);
     const [imageError, setImageError] = useState(false);
 
-    // Get the main image or first available image
-    const getProductImage = () => {
-        // Debug: Log the product data to see what we're working with
 
-        // Use the imageUrls virtual field if available (from backend)
-        if (p.imageUrls && p.imageUrls.length > 0) {
-            // If there's a main image, use it
-            if (p.mainImage) {
-                const mainImg = p.imageUrls.find(img => img.filename === p.mainImage);
-                if (mainImg) {
-                    // Remove leading slash to avoid double slash issue
-                    const cleanUrl = mainImg.url.startsWith('/') ? mainImg.url.slice(1) : mainImg.url;
-                    const imageUrl = `${BACKEND_URL}/${cleanUrl}`;
-                    console.log('ProductCard - Using main image from imageUrls:', imageUrl);
-                    return imageUrl;
-                }
-            }
-            // Otherwise use the first image
-            const cleanUrl = p.imageUrls[0].url.startsWith('/') ? p.imageUrls[0].url.slice(1) : p.imageUrls[0].url;
-            const imageUrl = `${BACKEND_URL}/${cleanUrl}`;
-            console.log('ProductCard - Using first image from imageUrls:', imageUrl);
-            return imageUrl;
-        }
-
-        // Fallback to manual construction if imageUrls not available
-        if (p.images && p.images.length > 0) {
-            // If there's a main image, use it
-            if (p.mainImage) {
-                const mainImg = p.images.find(img => img.filename === p.mainImage);
-                if (mainImg) {
-                    const imageUrl = `${BACKEND_URL}/uploads/products/${mainImg.filename}`;
-                    console.log('ProductCard - Using main image from images:', imageUrl);
-                    return imageUrl;
-                }
-            }
-            // Otherwise use the first image
-            const imageUrl = `${BACKEND_URL}/uploads/products/${p.images[0].filename}`;
-            console.log('ProductCard - Using first image from images:', imageUrl);
-            return imageUrl;
-        }
-
-        // Fallback to a default image
-        console.log('ProductCard - No images found, using fallback');
-        return 'https://via.placeholder.com/400x400?text=No+Image';
-    };
 
     const handleImageLoad = () => {
         setImageLoading(false);
@@ -98,7 +54,7 @@ const ProductCard = ({ p }) => {
                     {/* Show image when loaded */}
                     {!imageError && (
                         <img
-                            src={getProductImage()}
+                            // src={getProductImage()}
                             className={`aspect-square rounded-md object-cover w-full h-64 transition-opacity duration-300 ${imageLoading ? 'opacity-0' : 'opacity-100'
                                 }`}
                             alt={p.name}
@@ -121,7 +77,28 @@ const ProductCard = ({ p }) => {
 
                 <div className="action mt-3 flex justify-between items-start gap-3 flex-col">
                     <div className="price text-xl font-bold">
-                        Rs. {Math.ceil(p.price)}
+                        {p.discount > 0 ?
+                            <div className='flex gap-3 flex-col'>
+                                <div className='flex gap-2'>
+                                    <span className='line-through text-red-500 decoration-red-600'>
+                                        Rs. {Math.ceil(p.price)}
+                                    </span>
+                                    <span>
+                                        ({p.discount}% off)
+                                    </span>
+                                </div>
+
+
+                                <span className='text-green-600'>
+                                    Rs. {Math.ceil(p.price - p.price * p.discount / 100)}
+                                </span>
+                            </div>
+                            :
+                            <span className='text-green-600'>
+
+                                Rs. {Math.ceil(p.price)}
+                            </span>
+                        }
                     </div>
                     <button
                         onClick={handleAddToCart}

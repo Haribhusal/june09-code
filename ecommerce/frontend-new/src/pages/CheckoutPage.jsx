@@ -48,8 +48,8 @@ const CheckoutPage = () => {
     let discountPercentage = 15;
     let storedCartItems = useSelector(state => state.cart.cartItems);
 
-    let totalAmount = storedCartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-    let finalAmountAfterDiscount = (totalAmount) - (totalAmount * discountPercentage / 100);
+    let totalAmount = storedCartItems.reduce((total, item) => total + ((item.price - item.price * item.discount / 100) * item.quantity), 0);
+    let finalAmountAfterShipping = totalAmount + 200
 
 
 
@@ -142,9 +142,27 @@ const CheckoutPage = () => {
                                         <div className="info">
                                             <h3 className="p_name text-2xl font-bold">{item.name}</h3>
                                             <div className="meta my-5">
-                                                <div className="info_item">
-                                                    Price: {formatPrice(item.price)} * {item.quantity} = {formatPrice(item.price * item.quantity)}
-                                                </div>
+
+                                                {item.discount > 0 ?
+                                                    <div>
+                                                        <div className='flex gap-2'>
+
+                                                            <span className='line-through decoration-red-500 text-red-600'>
+                                                                {formatPrice(item.price)}
+                                                            </span>
+                                                            <span>
+                                                                {item.discount}% Off
+                                                            </span>
+                                                        </div>
+                                                        <div className="info_item">
+                                                            Price: {formatPrice(item.price - item.price * item.discount / 100)} * {item.quantity} = {formatPrice((item.price - item.price * item.discount / 100) * item.quantity)}
+                                                        </div>
+                                                    </div>
+                                                    :
+                                                    <span className=''>
+                                                        {formatPrice(item.price)}
+                                                    </span>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -240,12 +258,12 @@ const CheckoutPage = () => {
                                             <td className='py-2'>{formatPrice(totalAmount)}</td>
                                         </tr>
                                         <tr>
-                                            <td className='py-2'>Discount</td>
-                                            <td className='py-2'>{discountPercentage}%</td>
+                                            <td className='py-2'>Shippint Charge</td>
+                                            <td className='py-2'>Rs. 200</td>
                                         </tr>
                                         <tr>
                                             <td className='py-2'>Today's total</td>
-                                            <td className='py-2'>{formatPrice(finalAmountAfterDiscount)}</td>
+                                            <td className='py-2'>{formatPrice(finalAmountAfterShipping)}</td>
                                         </tr>
                                     </tbody>
                                 </table>

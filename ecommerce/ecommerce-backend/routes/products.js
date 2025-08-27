@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
     };
 
     const products = await Product.find(query)
-      .select('name description price category stock images mainImage isActive createdBy createdAt updatedAt')
+      .select('name description price discount category stock images mainImage isActive createdBy createdAt updatedAt')
       .populate('createdBy', 'name email')
       .sort(options.sort)
       .limit(options.limit)

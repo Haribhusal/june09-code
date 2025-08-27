@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 import { toast } from 'sonner'
 import DashboardProductCard from '../../components/DashboardProductCard'
+import { BACKEND_URL } from './../../config/config'
 
 const AllProductsPage = () => {
     const navigate = useNavigate();

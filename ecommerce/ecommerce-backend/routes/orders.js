@@ -13,119 +13,142 @@ const { safelyPopulateOrder, safelyPopulateOrders, cleanupOrphanedOrders } = req
 
 const router = express.Router();
 
+
+
 // Create order (authenticated users)
 router.post('/', authenticateToken, validateRequest(createOrderSchema), async (req, res) => {
+  const session = await Order.startSession();
+  session.startTransaction();
+
   try {
     const { items, shippingAddress, notes } = req.validatedData;
 
-    // Validate products and check stock
     const orderItems = [];
     let totalAmount = 0;
 
+    // Validate products & prepare order items
     for (const item of items) {
-      const product = await Product.findById(item.productId);
+      const product = await Product.findById(item.productId).session(session);
 
       if (!product) {
-        return res.status(404).json({
-          message: `Product with ID ${item.productId} not found`
-        });
+        throw new Error(`Product with ID ${item.productId} not found`);
       }
 
       if (!product.isActive) {
-        return res.status(400).json({
-          message: `Product ${product.name} is not available`
-        });
+        throw new Error(`Product ${product.name} is not available`);
       }
 
       if (product.stock < item.quantity) {
-        return res.status(400).json({
-          message: `Insufficient stock for ${product.name}. Available: ${product.stock}`
-        });
+        throw new Error(
+          `Insufficient stock for ${product.name}. Available: ${product.stock}`
+        );
       }
 
-      // Calculate item total
-      const itemTotal = product.price * item.quantity;
+      // Calculate discounted price
+      const discountedPrice = product.price - (product.price * product.discount) / 100;
+
+      // Calculate totals
+      const itemTotal = discountedPrice * item.quantity
       totalAmount += itemTotal;
 
+      // Prepare order item
       orderItems.push({
         product: product._id,
         quantity: item.quantity,
-        price: product.price
+        price: discountedPrice
       });
 
-      // Update product stock
+      // Deduct stock
       product.stock -= item.quantity;
-      await product.save();
+      await product.save({ session });
     }
+
+    // Add shipping charge
+    const shippingCharge = 200;
+    const finalAmount = totalAmount + shippingCharge;
 
     // Create order
     const order = new Order({
       user: req.user._id,
       items: orderItems,
-      totalAmount,
+      totalAmount: finalAmount,
       shippingAddress,
       notes
     });
 
-    await order.save();
+    await order.save({ session });
 
-    // Populate product details
+    // Commit transaction (all stock updates + order save)
+    await session.commitTransaction();
+    session.endSession();
+
+    // Populate product + user
     await order.populate({
       path: 'items.product',
-      select: 'name description price image'
+      select: 'name description price image discount'
     });
-
     await order.populate('user', 'name email');
 
-    // send email to user
+    // Ensure user data exists
     if (!order.user || !order.user.email || !order.user.name) {
-      console.error('User data not properly populated for new order:', order._id);
-      return res.status(500).json({
-        message: 'Error: User data not found for this order'
-      });
+      console.error('User data missing for order:', order._id);
+      return res.status(500).json({ message: 'User data not found for this order' });
     }
 
+    // Prepare email details
     const email = order.user.email;
     const name = order.user.name;
     const orderId = order._id;
     const orderDate = order.createdAt;
-    const orderTotal = order.totalAmount;
     const orderStatus = order.status;
 
-    // Filter out items with null products and create safe order items
-    const orderItemsTosend = order.items
-      .filter(item => item.product && item.product.name) // Only include items with valid products
+    const orderItemsToSend = order.items
+      .filter(item => item.product && item.product.name)
       .map(item => ({
         product: item.product.name,
         quantity: item.quantity,
-        price: item.price
+        price: item.price,
+        discount: item.product.discount
       }));
 
-    const orderItemsString = orderItemsTosend.length > 0
-      ? orderItemsTosend.map(item => `${item.product} - ${item.quantity} x ${item.price}`).join('\n')
-      : 'Product information unavailable';
+    const orderItemsString =
+      orderItemsToSend.length > 0
+        ? orderItemsToSend
+          .map(
+            item =>
+              `${item.product} - ${item.quantity} x ${item.price} - ${item.discount}% Off`
+          )
+          .join('\n')
+        : 'Product information unavailable';
 
+    // Send email to user
     const subject = 'Order created successfully';
     const message = `Hello ${name},
-    Your order has been created successfully.
-    Order ID: ${orderId}
-    Order Date: ${orderDate}
-    Order Total: ${orderTotal}
-    Order Status: ${orderStatus}
-    Order Items: ${orderItemsString}
+Your order has been created successfully.
+
+Order ID: ${orderId}
+Order Date: ${orderDate}
+Order Total: ${finalAmount}
+Shipping Charge: ${shippingCharge}
+Order Status: ${orderStatus}
+
+Order Items:
+${orderItemsString}
     `;
+
     await sendEmail(email, subject, message);
 
-    // send email to admin
+    // Send email to admin
     const adminEmail = process.env.ADMIN_EMAIL;
     if (adminEmail) {
       const adminSubject = 'New order created';
-      const adminMessage = `New order created by ${name} with order ID ${orderId}`;
+      const adminMessage = `New order created by ${name} with order ID ${orderId} and total amount ${finalAmount}`;
       await sendEmailToAdmin(adminSubject, adminMessage, null, adminEmail);
     } else {
       console.warn('ADMIN_EMAIL not configured, skipping admin notification');
     }
 
+    // Response
     res.status(201).json({
       success: true,
       message: 'Order created successfully',
@@ -133,12 +156,20 @@ router.post('/', authenticateToken, validateRequest(createOrderSchema), async (r
     });
   } catch (error) {
     console.error('Create order error:', error);
+
+    // Rollback if error
+    await session.abortTransaction();
+    session.endSession();
+
     res.status(500).json({
-      message: 'Error creating order',
-      error: process.env.NODE_ENV === 'development' ? error.message : {}
+      message: error.message || 'Error creating order',
+      error: process.env.NODE_ENV === 'development' ? error.stack : {}
     });
   }
 });
+
+
+
 
 // Get user's own orders
 router.get('/my-orders', authenticateToken, async (req, res) => {

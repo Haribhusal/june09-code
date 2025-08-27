@@ -27,6 +27,11 @@ const schemaForProduct = yup.object({
         .positive('Price must be greater than 0')
         .required('Price is required'),
 
+    discount: yup
+        .number()
+        .positive('discount must be greater than 0')
+        .typeError('discount must be a number'),
+
     category: yup
         .string()
         .trim()
@@ -38,6 +43,7 @@ const schemaForProduct = yup.object({
         .integer('Stock must be an integer')
         .min(0, 'Stock cannot be negative')
         .required('Stock is required'),
+
 
     image: yup
         .mixed()
@@ -77,6 +83,9 @@ const AddProductPage = () => {
     };
 
     const onSubmit = async (data) => {
+
+        console.log(data)
+
         const token = localStorage.getItem("token");
 
         try {
@@ -87,6 +96,7 @@ const AddProductPage = () => {
             formData.append('name', data.name);
             formData.append('description', data.description);
             formData.append('price', data.price);
+            formData.append('discount', data.discount)
             formData.append('category', data.category);
             formData.append('stock', data.stock);
 
@@ -146,6 +156,14 @@ const AddProductPage = () => {
                         <label htmlFor="price">Product Price*</label>
                         <input className='custom_input' placeholder='Enter Product Price' defaultValue="" {...register("price", { required: true })} />
                         {errors.price && <p className='custom_error'>{errors.price.message}</p>}
+                    </div>
+
+
+
+                    <div className="form-group">
+                        <label htmlFor="price">Product Discount</label>
+                        <input className='custom_input' type='number' placeholder='Enter Discount Percentage' defaultValue="" {...register("discount")} />
+                        {errors.discount && <p className='custom_error'>{errors.discount.message}</p>}
                     </div>
 
                     <div className="form-group">

@@ -27,6 +27,12 @@ const schemaForProduct = yup.object({
         .positive('Price must be greater than 0')
         .required('Price is required'),
 
+    discount: yup
+        .number()
+        .typeError('discount must be a number')
+        .positive('discount must be greater than 0')
+        .required('discount is required'),
+
     category: yup
         .string()
         .trim()
@@ -202,6 +208,7 @@ const EditProductPage = () => {
                     name: data.product.name || '',
                     description: data.product.description || '',
                     price: data.product.price || '',
+                    discount: data.product.discount || '',
                     category: data.product.category || '',
                     stock: data.product.stock || '',
                     mainImage: data.product.mainImage || ''
@@ -319,6 +326,11 @@ const EditProductPage = () => {
                         <label htmlFor="price">Product Price*</label>
                         <input className='custom_input' placeholder='Enter Product Price' defaultValue="" {...register("price", { required: true })} />
                         {errors.price && <p className='custom_error'>{errors.price.message}</p>}
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="price">Discount</label>
+                        <input className='custom_input' type='number' placeholder='Enter Product discount' defaultValue="" {...register("discount")} />
+                        {errors.discount && <p className='custom_error'>{errors.discount.message}</p>}
                     </div>
 
                     <div className="form-group">
